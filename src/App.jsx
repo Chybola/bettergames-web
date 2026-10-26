@@ -82,7 +82,7 @@ export default function App() {
         {
           id: 'gen-vip',
           name: 'Ranga VIP (GenBlock)',
-          price: '14.99 zł',
+          price: '10.00 zł',
           featured: false,
           perks: [
             'Prefiks [VIP] z różowym kolorem',
@@ -95,7 +95,7 @@ export default function App() {
         {
           id: 'gen-svip',
           name: 'Ranga SVIP (GenBlock)',
-          price: '29.99 zł',
+          price: '20.00 zł',
           featured: false,
           perks: [
             'Prefiks [SVIP] ze złotą ramką',
@@ -106,13 +106,13 @@ export default function App() {
           ]
         },
         {
-          id: 'gen-elita',
-          name: 'Ranga ELITA (GenBlock)',
-          price: '49.99 zł',
+          id: 'gen-mvip',
+          name: 'Ranga MVIP (GenBlock)',
+          price: '30.00 zł',
           featured: true,
           tag: 'Najczęściej kupowana',
           perks: [
-            'Fioletowo-różowy animowany prefiks [ELITA]',
+            'Błękitny animowany prefiks [MVIP]',
             '+15 dodatkowych slotów na generatory',
             'Mnożnik sprzedaży dropu x2.0',
             'Wirtualny lej zbierający drop z generatorów',
@@ -120,16 +120,16 @@ export default function App() {
           ]
         },
         {
-          id: 'gen-better',
-          name: 'Ranga BETTER (GenBlock)',
-          price: '89.99 zł',
+          id: 'gen-gvip',
+          name: 'Ranga GVIP (GenBlock)',
+          price: '50.00 zł',
           featured: true,
           tag: 'Maksymalny prestiż',
           perks: [
-            'Najwyższa ranga [BETTER] na zawsze',
+            'Najwyższa ranga [GVIP] z koroną',
             'Nielimitowane sloty na generatory surowców',
             'Potężny mnożnik sprzedaży x3.0',
-            'Darmowy codzienny /kit better z generatorami',
+            'Darmowy codzienny /kit gvip z generatorami',
             'Dostęp do unikalnego Generatora Gwiazdy Netheru'
           ]
         }
@@ -201,7 +201,7 @@ export default function App() {
         {
           id: 'sky-vip',
           name: 'Ranga VIP (SkyBlock)',
-          price: '14.99 zł',
+          price: '10.00 zł',
           featured: false,
           perks: [
             'Prefiks [VIP] na czacie i liście graczy',
@@ -214,7 +214,7 @@ export default function App() {
         {
           id: 'sky-svip',
           name: 'Ranga SVIP (SkyBlock)',
-          price: '29.99 zł',
+          price: '20.00 zł',
           featured: false,
           perks: [
             'Złoty prefiks [SVIP] nad głową',
@@ -225,13 +225,13 @@ export default function App() {
           ]
         },
         {
-          id: 'sky-elita',
-          name: 'Ranga ELITA (SkyBlock)',
-          price: '49.99 zł',
+          id: 'sky-mvip',
+          name: 'Ranga MVIP (SkyBlock)',
+          price: '30.00 zł',
           featured: true,
           tag: 'Polecany wybór',
           perks: [
-            'Fioletowo-różowy prefiks [ELITA]',
+            'Błękitny prefiks [MVIP] nad głową',
             'Powiększenie wyspy do 400x400 kratek',
             'Wirtualny zbieracz dropu z mobów i farm',
             'Zwiększony limit spawnerów do 100',
@@ -239,13 +239,13 @@ export default function App() {
           ]
         },
         {
-          id: 'sky-better',
-          name: 'Ranga BETTER (SkyBlock)',
-          price: '89.99 zł',
+          id: 'sky-gvip',
+          name: 'Ranga GVIP (SkyBlock)',
+          price: '50.00 zł',
           featured: true,
           tag: 'Władca Chmur',
           perks: [
-            'Maksymalna ranga [BETTER] z koroną',
+            'Maksymalna ranga [GVIP] z koroną',
             'Ogromna wyspa 600x600 kratek dla Ciebie i ekipy',
             'Nielimitowane stawianie spawnerów i mobów',
             'Automatyczne sadzenie i ścinanie plonów',
@@ -730,7 +730,7 @@ export default function App() {
 
                     <h3 className="shop-item-name">{item.name}</h3>
                     <div className="shop-item-price">
-                      {item.price} <span>/ edycja</span>
+                      {item.price} <span>{shopCategory === 'ranks' ? '/ 30 dni' : '/ pakiet'}</span>
                     </div>
 
                     <ul className="shop-perks-list">
