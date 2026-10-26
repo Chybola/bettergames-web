@@ -58,14 +58,21 @@ export default function App() {
     setMinecraftNick('')
   }
 
+  const tebexStoreUrl = "https://bettergames.tebex.io"
+
   const handleCompleteOrder = (e) => {
     e.preventDefault()
-    if (!minecraftNick.trim()) return
+    const nick = minecraftNick.trim()
+    if (!nick) return
     setOrderDone(true)
+
+    // Otwarcie kasy Tebex z przekazanym nickiem gracza
+    const targetUrl = `${tebexStoreUrl}?username=${encodeURIComponent(nick)}`
     setTimeout(() => {
+      window.open(targetUrl, '_blank')
       setSelectedProduct(null)
       setOrderDone(false)
-    }, 2800)
+    }, 1800)
   }
 
   // Oferta ItemShopu spersonalizowana dla GenBlock oraz SkyBlock
@@ -850,9 +857,12 @@ export default function App() {
             {orderDone ? (
               <div style={{ textAlign: 'center', padding: '1.5rem 0' }}>
                 <CheckCircle2 size={54} color="#22c55e" style={{ margin: '0 auto 1rem' }} />
-                <h3 className="modal-title">Zamówienie Złożone!</h3>
+                <h3 className="modal-title">Przekierowywanie do kasy...</h3>
                 <p className="modal-subtitle">
-                  Pakiet <strong>{selectedProduct.name}</strong> na tryb <strong>{selectedProduct.targetMode}</strong> dla gracza <strong>{minecraftNick}</strong> został aktywowany!
+                  Otwieranie płatności Tebex dla gracza <strong>{minecraftNick}</strong> (pakiet: <strong>{selectedProduct.name}</strong>).
+                </p>
+                <p style={{ marginTop: '0.75rem', fontSize: '0.85rem', color: '#c084fc' }}>
+                  Zaraz otworzy się okno płatności BLIK / PaySafeCard...
                 </p>
               </div>
             ) : (
@@ -904,7 +914,7 @@ export default function App() {
                   </div>
 
                   <button type="submit" className="modal-submit-btn">
-                    Zapłać teraz ({selectedProduct.price})
+                    Przejdź do płatności BLIK / PSC ({selectedProduct.price})
                   </button>
                 </form>
               </>
