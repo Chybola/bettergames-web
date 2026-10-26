@@ -41,8 +41,8 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [activeTab])
 
-  const serverJavaIP = "bettergames.gg"
-  const serverBedrockIP = "bettergames.gg"
+  const serverJavaIP = "bettergame.pl"
+  const serverBedrockIP = "bettergame.pl"
   const bedrockPort = "19132"
 
   const handleCopy = () => {
@@ -316,7 +316,7 @@ export default function App() {
       <div className="top-announcement">
         <Sparkles size={15} color="#f472b6" />
         <span>
-          Nowa edycja <strong>BETTER GAMES</strong>! Dwa potężne tryby: <strong>GENBLOCK</strong> & <strong>SKYBLOCK</strong>. Kod rabatowy -20%: <strong>BETTER20</strong>
+          Nowa edycja <strong>BETTER GAME</strong>! Dwa potężne tryby: <strong>GENBLOCK</strong> & <strong>SKYBLOCK</strong>. Kod rabatowy -20%: <strong>BETTER20</strong>
         </span>
       </div>
 
@@ -328,7 +328,7 @@ export default function App() {
               <Zap size={22} color="#ffffff" />
             </div>
             <div className="brand-name">
-              BETTER<span>GAMES</span>
+              BETTER<span>GAME</span>
             </div>
           </div>
 
@@ -385,11 +385,11 @@ export default function App() {
                 </div>
 
                 <h1 className="hero-main-title">
-                  DOŁĄCZ DO <span className="text-gradient">BETTER GAMES</span>
+                  DOŁĄCZ DO <span className="text-gradient">BETTER GAME</span>
                 </h1>
 
                 <p className="hero-subtitle">
-                  Odkryj dwa najbardziej uzależniające tryby Minecraft w Polsce.
+                  Odkryj dwa najbardziej uzależniające tryby Minecraft w Polsce na serwerze <strong>bettergame.pl</strong>.
                   Stawiaj zautomatyzowane generatory na <strong>GenBlocku</strong> lub wzbij się w chmury
                   i stwórz potężne imperium na <strong>SkyBlocku</strong>!
                 </p>
@@ -633,7 +633,7 @@ export default function App() {
             <div className="container">
               <div className="section-title-wrap">
                 <span className="section-tag">Oficjalny ItemShop</span>
-                <h2 className="section-heading">SKLEP SERWERA BETTER GAMES</h2>
+                <h2 className="section-heading">SKLEP SERWERA BETTER GAME</h2>
                 <p className="section-description">
                   Wybierz tryb, na który chcesz zakupić rangę, klucze lub pakiety surowców.
                 </p>
@@ -923,11 +923,11 @@ export default function App() {
                   <Zap size={20} color="#ffffff" />
                 </div>
                 <div className="brand-name">
-                  BETTER<span>GAMES</span>
+                  BETTER<span>GAME</span>
                 </div>
               </div>
               <p className="footer-desc">
-                Oficjalny serwer Minecraft Better Games. Dwa dopracowane tryby: GenBlock oraz SkyBlock. Najlepsza społeczność, brak lagów i stałe 20 TPS.
+                Oficjalny serwer Minecraft BetterGame.pl. Dwa dopracowane tryby: GenBlock oraz SkyBlock. Najlepsza społeczność, brak lagów i stałe 20 TPS.
               </p>
             </div>
 
@@ -954,7 +954,7 @@ export default function App() {
           </div>
 
           <div className="footer-bottom">
-            <span>© {new Date().getFullYear()} BETTER GAMES. Wszelkie prawa zastrzeżone.</span>
+            <span>© {new Date().getFullYear()} BETTER GAME. Wszelkie prawa zastrzeżone.</span>
             <span>Nie jesteśmy powiązani ze spółką Mojang Studios ani Microsoft.</span>
           </div>
         </div>
