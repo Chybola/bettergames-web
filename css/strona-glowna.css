@@ -210,6 +210,8 @@
   background: linear-gradient(90deg, rgba(155, 61, 255, .14), transparent 70%);
   padding-left: 14px;
 }
+.modes li.is-soon { opacity: .55; }
+.modes li.is-soon:hover { background: none; padding-left: 0; }
 .modes .num { color: var(--gold); font-size: 15px; padding-top: 10px; }
 .modes h3 { font-size: clamp(28px, 3.6vw, 40px); font-weight: 800; margin-bottom: 8px; }
 .modes p { color: var(--muted); max-width: 620px; margin: 0; }

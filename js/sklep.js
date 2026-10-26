@@ -13,7 +13,7 @@ const esc = (s) => String(s).replace(/[&<>"']/g, (z) => ({ "&": "&amp;", "<": "&
 
 let koszyk = wczytajKoszyk().filter((poz) => produkt(poz.id));
 let krok = "lista";
-let wybranyTryb = tryb(location.hash.slice(1)) ? location.hash.slice(1) : "survival";
+let wybranyTryb = tryb(location.hash.slice(1)) ? location.hash.slice(1) : TRYBY[0].id;
 let wybranaKategoria = "wszystko";
 
 /* ---------- produkty ---------- */
@@ -56,7 +56,11 @@ function renderujTryby() {
       <b>${esc(t.nazwa)}</b>
       <span>${esc(t.opis)}</span>
       <small class="mono">${PRODUKTY.filter((p) => p.tryb === t.id).length} produktów</small>
-    </button>`).join("");
+    </button>`).join("") + `
+    <div class="mode-card is-soon" aria-hidden="true">
+      <b>Wkrótce</b>
+      <span>Kolejne tryby są w drodze</span>
+    </div>`;
 }
 
 function renderujKategorie() {

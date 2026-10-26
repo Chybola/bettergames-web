@@ -104,6 +104,16 @@
     var(--bg-3);
 }
 .mode-card[aria-selected="true"]::before { opacity: 1; }
+.mode-card.is-soon {
+  cursor: default;
+  background: transparent;
+  border-style: dashed;
+  border-color: var(--line-2);
+  align-content: center;
+}
+.mode-card.is-soon::before { display: none; }
+.mode-card.is-soon:hover { transform: none; }
+.mode-card.is-soon b { color: var(--dim); }
 .mode-card[aria-selected="true"] small { color: var(--accent); }
 
 .shop-bar {
