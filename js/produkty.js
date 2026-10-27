@@ -7,7 +7,7 @@ const TRYBY = [
   { id: "genblock", nazwa: "GenBlock", opis: "Generatory, ulepszenia, rankingi", kolor: "#ff2fb0" },
 ];
 
-const KATEGORIE = { rangi: "Rangi", kosmetyki: "Kosmetyki", wsparcie: "Wsparcie" };
+const KATEGORIE = { rangi: "Rangi", zestawy: "Zestawy", klucze: "Klucze", kosmetyki: "Kosmetyki", wsparcie: "Wsparcie" };
 
 const PRODUKTY = [
   /* ---------- GenBlock ---------- */
@@ -66,6 +66,59 @@ const PRODUKTY = [
     wyroznienie: "najwyższa ranga",
     opis: "Najwyższa ranga na serwerze, nazwana tak jak my.",
     zawiera: ["wszystko z rangi ELITA", "prefiks [BETTER] z gradientem", "własny kolor nicku (HEX)", "rola Better na Discordzie"],
+  },
+  {
+    id: "gen-zestaw-better-plus",
+    tryb: "genblock",
+    kategoria: "zestawy",
+    nazwa: "Zestaw BETTER+",
+    okres: "30 dni",
+    cena: 6500,
+    kolor: "#f4c04a",
+    wyroznienie: "taniej niż osobno",
+    opis: "Ranga BETTER, kit i 10 kluczy w jednym.",
+    zawiera: ["ranga BETTER na 30 dni", "/kit better co 24h przez 30 dni", "4× klucz Zwykły", "3× klucz Epicki", "3× klucz Legendarny"],
+  },
+  {
+    id: "gen-zestaw-better",
+    tryb: "genblock",
+    kategoria: "zestawy",
+    nazwa: "Zestaw BETTER",
+    okres: "jednorazowo",
+    cena: 2500,
+    kolor: "#f4c04a",
+    opis: "Kit BETTER i 10 kluczy, bez rangi.",
+    zawiera: ["kit BETTER (jednorazowo)", "6× klucz Zwykły", "3× klucz Epicki", "1× klucz Legendarny"],
+  },
+  {
+    id: "gen-klucz-zwykly",
+    tryb: "genblock",
+    kategoria: "klucze",
+    nazwa: "Klucz Zwykły",
+    okres: "1 szt.",
+    cena: 200,
+    kolor: "#33e4f2",
+    opis: "Klucz do zwykłej skrzynki na GenBlocku.",
+  },
+  {
+    id: "gen-klucz-epicki",
+    tryb: "genblock",
+    kategoria: "klucze",
+    nazwa: "Klucz Epicki",
+    okres: "1 szt.",
+    cena: 500,
+    kolor: "#c18bff",
+    opis: "Klucz do epickiej skrzynki na GenBlocku.",
+  },
+  {
+    id: "gen-klucz-legendarny",
+    tryb: "genblock",
+    kategoria: "klucze",
+    nazwa: "Klucz Legendarny",
+    okres: "1 szt.",
+    cena: 1000,
+    kolor: "#ff2fb0",
+    opis: "Klucz do legendarnej skrzynki na GenBlocku.",
   },
 ];
 
