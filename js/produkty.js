@@ -127,7 +127,11 @@ const POROWNANIE = {
   genblock: [
     { cecha: "Prefiks na czacie i tabie", wartosci: { "gen-vip": "[VIP]", "gen-svip": "[SVIP]", "gen-sponsor": "[SPONSOR]", "gen-elita": "[ELITA]", "gen-better": "[BETTER]" } },
     { cecha: "Kolorowy nick", od: "gen-vip" },
-    { cecha: "Kit (+ kity niższych rang)", wartosci: { "gen-vip": "/kit vip", "gen-svip": "/kit svip", "gen-sponsor": "/kit sponsor", "gen-elita": "/kit elita", "gen-better": "/kit better" } },
+    { cecha: "/kit vip", od: "gen-vip" },
+    { cecha: "/kit svip", od: "gen-svip" },
+    { cecha: "/kit sponsor", od: "gen-sponsor" },
+    { cecha: "/kit elita", od: "gen-elita" },
+    { cecha: "/kit better", od: "gen-better" },
     { cecha: "Rola na Discordzie", wartosci: { "gen-vip": "VIP", "gen-svip": "SVIP", "gen-sponsor": "Sponsor", "gen-elita": "Elita", "gen-better": "Better" } },
     { cecha: "Prefiks z gradientem", od: "gen-better" },
     { cecha: "Własny kolor nicku (HEX)", od: "gen-better" },
