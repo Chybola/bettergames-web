@@ -20,7 +20,7 @@ const PRODUKTY = [
     cena: 1000,
     kolor: "#33e4f2",
     opis: "Ranga na start na GenBlocku.",
-    zawiera: ["prefiks [VIP] na czacie i tabie", "kolorowy nick", "rola VIP na Discordzie"],
+    zawiera: ["prefiks [VIP] na czacie i tabie", "kolorowy nick", "dostęp do /kit vip", "rola VIP na Discordzie"],
   },
   {
     id: "gen-svip",
@@ -31,7 +31,7 @@ const PRODUKTY = [
     cena: 2000,
     kolor: "#c18bff",
     opis: "Wszystko z VIP-a i trochę więcej.",
-    zawiera: ["wszystko z rangi VIP", "prefiks [SVIP]", "rola SVIP na Discordzie"],
+    zawiera: ["wszystko z rangi VIP", "prefiks [SVIP]", "dostęp do /kit svip", "rola SVIP na Discordzie"],
   },
   {
     id: "gen-sponsor",
@@ -42,7 +42,7 @@ const PRODUKTY = [
     cena: 3000,
     kolor: "#f4c04a",
     opis: "Dla tych, którzy chcą mocniej wesprzeć serwer.",
-    zawiera: ["wszystko z rangi SVIP", "prefiks [SPONSOR]", "rola Sponsor na Discordzie"],
+    zawiera: ["wszystko z rangi SVIP", "prefiks [SPONSOR]", "dostęp do /kit sponsor", "rola Sponsor na Discordzie"],
   },
   {
     id: "gen-elita",
@@ -53,7 +53,7 @@ const PRODUKTY = [
     cena: 4000,
     kolor: "#ff6fae",
     opis: "Ranga dla stałych bywalców GenBlocka.",
-    zawiera: ["wszystko z rangi SPONSOR", "prefiks [ELITA]", "rola Elita na Discordzie"],
+    zawiera: ["wszystko z rangi SPONSOR", "prefiks [ELITA]", "dostęp do /kit elita", "rola Elita na Discordzie"],
   },
   {
     id: "gen-better",
@@ -65,7 +65,7 @@ const PRODUKTY = [
     kolor: "#ff2fb0",
     wyroznienie: "najwyższa ranga",
     opis: "Najwyższa ranga na serwerze, nazwana tak jak my.",
-    zawiera: ["wszystko z rangi ELITA", "prefiks [BETTER] z gradientem", "własny kolor nicku (HEX)", "rola Better na Discordzie"],
+    zawiera: ["wszystko z rangi ELITA", "prefiks [BETTER] z gradientem", "własny kolor nicku (HEX)", "dostęp do /kit better", "rola Better na Discordzie"],
   },
   {
     id: "gen-zestaw-better-plus",
@@ -76,8 +76,8 @@ const PRODUKTY = [
     cena: 6500,
     kolor: "#f4c04a",
     wyroznienie: "taniej niż osobno",
-    opis: "Ranga BETTER, kit i 10 kluczy w jednym.",
-    zawiera: ["ranga BETTER na 30 dni", "/kit better co 24h przez 30 dni", "4× klucz Zwykły", "3× klucz Epicki", "3× klucz Legendarny"],
+    opis: "Ranga BETTER z dostępem do kitu i 10 kluczy w jednym.",
+    zawiera: ["ranga BETTER na 30 dni", "dostęp do /kit better przez 30 dni", "4× klucz Zwykły", "3× klucz Epicki", "3× klucz Legendarny"],
   },
   {
     id: "gen-zestaw-better",
@@ -127,6 +127,7 @@ const POROWNANIE = {
   genblock: [
     { cecha: "Prefiks na czacie i tabie", wartosci: { "gen-vip": "[VIP]", "gen-svip": "[SVIP]", "gen-sponsor": "[SPONSOR]", "gen-elita": "[ELITA]", "gen-better": "[BETTER]" } },
     { cecha: "Kolorowy nick", od: "gen-vip" },
+    { cecha: "Kit (+ kity niższych rang)", wartosci: { "gen-vip": "/kit vip", "gen-svip": "/kit svip", "gen-sponsor": "/kit sponsor", "gen-elita": "/kit elita", "gen-better": "/kit better" } },
     { cecha: "Rola na Discordzie", wartosci: { "gen-vip": "VIP", "gen-svip": "SVIP", "gen-sponsor": "Sponsor", "gen-elita": "Elita", "gen-better": "Better" } },
     { cecha: "Prefiks z gradientem", od: "gen-better" },
     { cecha: "Własny kolor nicku (HEX)", od: "gen-better" },
