@@ -68,3 +68,14 @@ const PRODUKTY = [
     zawiera: ["wszystko z rangi ELITA", "prefiks [BETTER] z gradientem", "własny kolor nicku (HEX)", "rola Better na Discordzie"],
   },
 ];
+
+// Tabela porównania rang w trybie. "od" = cecha od tej rangi w górę, "wartosci" = osobny tekst dla każdej rangi.
+const POROWNANIE = {
+  genblock: [
+    { cecha: "Prefiks na czacie i tabie", wartosci: { "gen-vip": "[VIP]", "gen-svip": "[SVIP]", "gen-sponsor": "[SPONSOR]", "gen-elita": "[ELITA]", "gen-better": "[BETTER]" } },
+    { cecha: "Kolorowy nick", od: "gen-vip" },
+    { cecha: "Rola na Discordzie", wartosci: { "gen-vip": "VIP", "gen-svip": "SVIP", "gen-sponsor": "Sponsor", "gen-elita": "Elita", "gen-better": "Better" } },
+    { cecha: "Prefiks z gradientem", od: "gen-better" },
+    { cecha: "Własny kolor nicku (HEX)", od: "gen-better" },
+  ],
+};

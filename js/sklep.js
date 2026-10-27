@@ -77,6 +77,25 @@ function renderujProdukty() {
   document.getElementById("produkty").innerHTML = lista.map(kartaProduktu).join("");
 }
 
+function renderujPorownanie() {
+  const wiersze = POROWNANIE[wybranyTryb];
+  const rangi = PRODUKTY.filter((p) => p.tryb === wybranyTryb && p.kategoria === "rangi");
+  const blok = document.getElementById("porownanie");
+  blok.hidden = !wiersze || rangi.length < 2 || !["wszystko", "rangi"].includes(wybranaKategoria);
+  if (blok.hidden) return;
+
+  const indeks = (id) => rangi.findIndex((r) => r.id === id);
+  const komorka = (w, r, i) => {
+    if (w.wartosci) return w.wartosci[r.id] ? `<span class="mono">${esc(w.wartosci[r.id])}</span>` : `<span class="no">—</span>`;
+    return i >= indeks(w.od) ? `<span class="yes" aria-label="tak">✓</span>` : `<span class="no" aria-label="nie">—</span>`;
+  };
+
+  document.getElementById("tabela-porownania").innerHTML = `
+    <thead><tr><th scope="col"><span class="sr-only">Cecha</span></th>${rangi.map((r) => `<th scope="col" style="--accent:${r.kolor}"><span class="mono rank-tag">[${esc(r.nazwa)}]</span></th>`).join("")}</tr></thead>
+    <tbody>${wiersze.map((w) => `<tr><th scope="row">${esc(w.cecha)}</th>${rangi.map((r, i) => `<td>${komorka(w, r, i)}</td>`).join("")}</tr>`).join("")}</tbody>
+    <tfoot><tr><th scope="row">Cena</th>${rangi.map((r) => `<td><strong>${zl(r.cena)}</strong><small class="mono">${esc(r.okres)}</small><button class="btn btn-pink add" data-dodaj="${r.id}">Do koszyka</button></td>`).join("")}</tr></tfoot>`;
+}
+
 function ustawTryb(id) {
   wybranyTryb = id;
   wybranaKategoria = "wszystko";
@@ -84,6 +103,7 @@ function ustawTryb(id) {
   renderujTryby();
   renderujKategorie();
   renderujProdukty();
+  renderujPorownanie();
 }
 
 /* ---------- koszyk ---------- */
@@ -168,6 +188,23 @@ function ustawKrok(nowy) {
 
 const formularz = document.getElementById("formularz");
 
+// podgląd skórki z mc-heads.net, żeby kupujący zauważył literówkę w nicku
+let czasPodgladu;
+formularz.elements.nick.addEventListener("input", (e) => {
+  clearTimeout(czasPodgladu);
+  const nick = e.target.value.trim();
+  const podglad = document.getElementById("podglad-skina");
+  if (!/^[A-Za-z0-9_]{3,16}$/.test(nick)) {
+    podglad.hidden = true;
+    return;
+  }
+  czasPodgladu = setTimeout(() => {
+    podglad.querySelector("img").src = `https://mc-heads.net/avatar/${encodeURIComponent(nick)}/40`;
+    podglad.querySelector("b").textContent = nick;
+    podglad.hidden = false;
+  }, 400);
+});
+
 function sprawdzFormularz() {
   const f = formularz.elements;
   const nick = f.nick.value.trim();
@@ -198,6 +235,8 @@ async function zloz() {
     nick: f.nick.value.trim(),
     email: f.email.value.trim(),
     platnosc: f.platnosc.value,
+    // kod sprawdza i nalicza backend
+    kod: f.kod.value.trim().toUpperCase() || null,
     pozycje: koszyk.map(({ id, ilosc }) => ({ id, ilosc, tryb: produkt(id).tryb })),
     suma: suma(),
     zgody: {
@@ -251,6 +290,7 @@ document.addEventListener("click", (e) => {
     wybranaKategoria = t.dataset.kategoria;
     document.querySelectorAll(".tab").forEach((b) => b.setAttribute("aria-selected", b === t));
     renderujProdukty();
+    renderujPorownanie();
   }
 });
 
@@ -266,6 +306,7 @@ document.addEventListener("keydown", (e) => {
 renderujTryby();
 renderujKategorie();
 renderujProdukty();
+renderujPorownanie();
 renderujKoszyk();
 ustawKrok("lista");
 if (location.hash === "#koszyk") otworz();

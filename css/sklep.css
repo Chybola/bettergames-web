@@ -411,6 +411,53 @@ body.drawer-open { overflow: hidden; }
 .done h3 { font-size: 26px; margin-bottom: 12px; }
 .done p { color: var(--muted); margin: 0 0 24px; }
 
+/* ---------- metody płatności ---------- */
+.hero-side { display: grid; gap: 12px; }
+.pay-badges { display: flex; flex-wrap: wrap; gap: 6px; max-width: 300px; }
+.pay-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 26px;
+  padding: 0 8px;
+  border: 1px solid var(--line-2);
+  border-radius: 5px;
+  background: var(--bg-2);
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 600;
+}
+.pay-blik { background: #000; border-color: #000; color: #fff; font-weight: 800; letter-spacing: -.02em; text-transform: lowercase; }
+.pay-visa { color: #fff; background: #1a1f71; border-color: #1a1f71; font-style: italic; font-weight: 800; }
+.secure-note { display: flex; align-items: center; gap: 6px; margin: 0; font-size: 13px; color: var(--dim); max-width: 300px; }
+.secure-note svg { flex: none; color: var(--ok); }
+.pay-methods .pay-badge { height: 22px; font-size: 11px; padding: 0 6px; }
+
+/* ---------- porównanie rang ---------- */
+.compare { margin-top: 56px; }
+.compare[hidden] { display: none; }
+.compare-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg-2); }
+.compare-table { width: 100%; min-width: 680px; border-collapse: collapse; font-size: 15px; }
+.compare-table th, .compare-table td { padding: 14px 12px; text-align: center; border-bottom: 1px solid var(--line); }
+.compare-table tbody th, .compare-table tfoot th { text-align: left; font-weight: 600; color: var(--muted); }
+.compare-table thead th { border-bottom: 2px solid var(--line-2); }
+.compare-table thead .rank-tag { font-size: 16px; }
+.compare-table tbody tr:last-child th, .compare-table tbody tr:last-child td { border-bottom: 0; }
+.compare-table tfoot td, .compare-table tfoot th { border-top: 2px solid var(--line-2); border-bottom: 0; vertical-align: top; }
+.compare-table tfoot strong { display: block; font-size: 20px; font-weight: 800; }
+.compare-table tfoot small { display: block; color: var(--dim); font-size: 11px; margin-bottom: 10px; }
+.compare-table .add { padding: 8px 12px; font-size: 13px; }
+.compare-table .yes { color: var(--ok); font-weight: 800; }
+.compare-table .no { color: var(--dim); }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ---------- podgląd skórki ---------- */
+.skin-preview { display: flex; align-items: center; gap: 12px; margin-top: 4px; padding: 10px; border: 1px solid var(--line-2); border-radius: var(--radius); background: var(--bg-2); }
+.skin-preview[hidden] { display: none; }
+.skin-preview img { image-rendering: pixelated; border-radius: 4px; flex: none; }
+.skin-preview p { margin: 0; display: grid; gap: 2px; }
+.field > span small { font-weight: 400; color: var(--dim); }
+
 /* ---------- responsywność ---------- */
 @media (max-width: 960px) {
   .products { grid-template-columns: 1fr 1fr; }
