@@ -73,7 +73,7 @@ const PRODUKTY = [
     kategoria: "zestawy",
     nazwa: "Zestaw BETTER+",
     okres: "30 dni",
-    cena: 7499,
+    cena: 11999,
     kolor: "#f4c04a",
     wyroznienie: "taniej niż osobno",
     opis: "Ranga BETTER z dostępem do kitu i 10 kluczy w jednym.",
