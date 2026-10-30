@@ -46,22 +46,18 @@
         <p class="kicker">Sklep serwera</p>
         <h1 class="td-pink">Sklep</h1>
         <div class="shop-hero-row">
-          <p>Każdy tryb ma osobny sklep, a ranga działa w trybie, w którym ją kupisz. Na start ruszamy z GenBlockiem — kolejne tryby dojdą wkrótce. Przedmiot trafia na konto zwykle w ciągu kilku minut od zaksięgowania płatności.</p>
+          <p>Każdy tryb ma osobny sklep, a ranga działa w trybie, w którym ją kupisz. Na start ruszamy z GenBlockiem — kolejne tryby dojdą wkrótce. Płacisz kodem paysafecard, a zakup nadaje <b>administrator</b> po ręcznym sprawdzeniu kodu — zwykle w ciągu kilku godzin. Nie musisz być wtedy w grze.</p>
           <div class="hero-side">
             <ul class="facts">
               <li><b>Ceny brutto</b> w złotówkach</li>
               <li><b>Pomoc:</b> ticket na Discordzie</li>
             </ul>
             <div class="pay-badges" aria-label="Metody płatności">
-            <span class="pay-badge pay-blik">blik</span>
-            <span class="pay-badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 10h18M5 10v8M9.5 10v8M14.5 10v8M19 10v8M2 21h20M12 3l9 5H3z"/></svg>przelew</span>
-            <span class="pay-badge pay-visa">VISA</span>
-            <span class="pay-badge"><svg width="22" height="14" viewBox="0 0 22 14" aria-hidden="true"><circle cx="7" cy="7" r="7" fill="#eb001b"/><circle cx="15" cy="7" r="7" fill="#f79e1b" fill-opacity=".9"/></svg>Mastercard</span>
             <span class="pay-badge">paysafecard</span>
             </div>
             <p class="secure-note">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
-              Płacisz u operatora płatności — nie widzimy danych Twojej karty ani konta.
+              Kod paysafecard widzi tylko administracja — po sprawdzeniu usuwamy go z naszej bazy.
             </p>
           </div>
         </div>
@@ -131,20 +127,12 @@
         <small>Wyślemy tu potwierdzenie zamówienia i dowód zakupu.</small>
       </label>
 
-      <label class="field">
-        <span>Kod rabatowy <small>(opcjonalnie)</small></span>
-        <input name="kod" autocomplete="off" spellcheck="false" maxlength="32" placeholder="np. EVENT10">
-        <small>Rabat naliczymy przy przejściu do płatności.</small>
-      </label>
-
       <fieldset class="field">
-        <span>Płatność</span>
-        <div class="pay-methods">
-          <label><input type="radio" name="platnosc" value="blik" checked><span class="pay-badge pay-blik">blik</span><b>BLIK</b></label>
-          <label><input type="radio" name="platnosc" value="przelew"><b>Szybki przelew</b></label>
-          <label><input type="radio" name="platnosc" value="karta"><svg width="22" height="14" viewBox="0 0 22 14" aria-hidden="true"><circle cx="7" cy="7" r="7" fill="#eb001b"/><circle cx="15" cy="7" r="7" fill="#f79e1b" fill-opacity=".9"/></svg><b>Karta</b></label>
-          <label><input type="radio" name="platnosc" value="paysafecard"><b>paysafecard</b></label>
-        </div>
+        <span>Płatność: paysafecard</span>
+        <input type="hidden" name="platnosc" value="paysafecard">
+        <textarea name="kodypsc" rows="3" autocomplete="off" spellcheck="false" placeholder="1234 5678 9012 3456" required></textarea>
+        <small>Wpisz kod (16 cyfr) — kilka kodów, każdy w nowej linii, maks. 5. Łączna wartość kodów musi pokrywać kwotę zamówienia.
+          <b>Zakup nadaje administrator</b> po ręcznym sprawdzeniu kodu, zwykle w ciągu kilku godzin. Ranga działa od razu po zatwierdzeniu (nawet jeśli nie grasz), klucze dostaniesz przy wejściu na GenBlock.</small>
       </fieldset>
 
       <div class="consents">
@@ -192,7 +180,7 @@
             <span>Better<b>Game</b></span>
           </a>
           <p>Serwer Minecraft. IP: <span class="mono">bettergame.pl</span></p>
-          <div class="pay-row"><span>BLIK</span><span>PRZELEW</span><span>VISA</span><span>MASTERCARD</span><span>PAYSAFECARD</span></div>
+          <div class="pay-row"><span>PAYSAFECARD</span></div>
         </div>
         <div>
           <h4>Serwer</h4>

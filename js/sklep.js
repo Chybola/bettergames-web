@@ -2,7 +2,7 @@
 
 // Adres backendu, który utworzy zamówienie i zwróci link do bramki płatności
 // (np. Tpay, Przelewy24, HotPay). Dopóki jest pusty, formularz pokaże komunikat.
-const ADRES_ZAMOWIEN = "";
+const ADRES_ZAMOWIEN = "https://panel.bettergame.pl/sklep/zamowienie.php";
 
 const zl = (grosze) =>
   (grosze / 100).toLocaleString("pl-PL", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " zł";
@@ -205,6 +205,11 @@ formularz.elements.nick.addEventListener("input", (e) => {
   }, 400);
 });
 
+// Kody PSC z pola tekstowego: każdy kod w osobnej linii, same cyfry
+function kodyPsc() {
+  return formularz.elements.kodypsc.value.split(/\n+/).map((k) => k.replace(/\D/g, "")).filter(Boolean);
+}
+
 function sprawdzFormularz() {
   const f = formularz.elements;
   const nick = f.nick.value.trim();
@@ -212,6 +217,9 @@ function sprawdzFormularz() {
 
   if (!/^[A-Za-z0-9_]{3,16}$/.test(nick)) return "Nick musi mieć 3–16 znaków: litery, cyfry lub _.";
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return "Podaj poprawny adres e-mail.";
+  const kody = kodyPsc();
+  if (kody.length < 1 || kody.length > 5) return "Wpisz od 1 do 5 kodów paysafecard.";
+  if (kody.some((k) => k.length !== 16)) return "Kod paysafecard ma 16 cyfr — sprawdź, czy dobrze go przepisałeś.";
   if (!f.regulamin.checked) return "Musisz zaakceptować regulamin i politykę prywatności.";
   if (!f.tresci_cyfrowe.checked) return "Zaznacz zgodę na natychmiastowe dostarczenie treści cyfrowych.";
   if (!f.pelnoletnosc.checked) return "Potwierdź pełnoletność lub zgodę opiekuna.";
@@ -234,9 +242,9 @@ async function zloz() {
   const zamowienie = {
     nick: f.nick.value.trim(),
     email: f.email.value.trim(),
-    platnosc: f.platnosc.value,
-    // kod sprawdza i nalicza backend
-    kod: f.kod.value.trim().toUpperCase() || null,
+    platnosc: "paysafecard",
+    // kody sprawdza ręcznie administrator w panelu
+    kodyPsc: kodyPsc(),
     pozycje: koszyk.map(({ id, ilosc }) => ({ id, ilosc, tryb: produkt(id).tryb })),
     suma: suma(),
     zgody: {
@@ -261,13 +269,21 @@ async function zloz() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(zamowienie),
     });
-    if (!odp.ok) throw new Error(odp.status);
-    const { url } = await odp.json();
+    const wynik = await odp.json().catch(() => ({}));
+    if (!odp.ok) {
+      pole.textContent = wynik.blad || "Nie udało się złożyć zamówienia. Spróbuj ponownie za chwilę.";
+      return;
+    }
     koszyk = [];
     zapiszKoszyk(koszyk);
-    window.location.href = url;
+    renderujKoszyk();
+    formularz.reset();
+    pokazInfo(`Zamówienie #${wynik.id} przyjęte`,
+      `Administrator sprawdzi kod paysafecard i nada zakup na konto ${zamowienie.nick} — zwykle w ciągu kilku godzin. ` +
+      "Nie musisz być wtedy w grze: ranga zadziała od razu po zatwierdzeniu, a klucze dostaniesz przy wejściu na GenBlock. " +
+      "Problem? Napisz ticket na Discordzie i podaj numer zamówienia.");
   } catch {
-    pole.textContent = "Nie udało się utworzyć zamówienia. Spróbuj ponownie za chwilę.";
+    pole.textContent = "Nie udało się złożyć zamówienia. Spróbuj ponownie za chwilę.";
   } finally {
     przycisk.disabled = false;
   }

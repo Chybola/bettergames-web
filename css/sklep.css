@@ -362,7 +362,8 @@ body.drawer-open { overflow: hidden; }
 .field > span { font-weight: 600; font-size: 15px; }
 .field small { color: var(--dim); font-size: 13px; }
 .field input:not([type]),
-.field input[type="email"] {
+.field input[type="email"],
+.field textarea {
   font: inherit;
   background: var(--bg);
   border: 1.5px solid var(--line-2);
@@ -371,7 +372,8 @@ body.drawer-open { overflow: hidden; }
   border-radius: var(--radius);
   outline: none;
 }
-.field input:focus { border-color: var(--violet-2); }
+.field input:focus, .field textarea:focus { border-color: var(--violet-2); }
+.field textarea { resize: vertical; min-height: 84px; font-family: var(--f-mono); letter-spacing: 1px; }
 .field input[name="nick"] { font-family: var(--f-mono); }
 
 .pay-methods {
