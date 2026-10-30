@@ -18,49 +18,45 @@ let wybranaKategoria = "wszystko";
 
 /* ---------- produkty ---------- */
 
+// krótki opis pod nagłówkiem każdej kategorii
+const OPISY_KATEGORII = {
+  rangi: "Na 30 dni. Każda ranga ma wszystko z poprzednich.",
+  zestawy: "Kilka rzeczy w jednym, taniej niż osobno.",
+  klucze: "Otwierasz nimi skrzynki na spawnie.",
+};
+
 function kartaProduktu(p) {
-  const promo = p.cenaPrzed
-    ? `<span class="old">${zl(p.cenaPrzed)}</span>`
-    : "";
+  const ranga = p.kategoria === "rangi";
+  const promo = p.cenaPrzed ? `<span class="old">${zl(p.cenaPrzed)}</span>` : "";
   const omnibus = p.najnizsza30
     ? `<p class="omnibus">Najniższa cena z 30 dni przed obniżką: ${zl(p.najnizsza30)}</p>`
     : "";
-  const lista = p.zawiera
+  const lista = p.zawiera && !ranga
     ? `<ul class="perks">${p.zawiera.map((z) => `<li>${esc(z)}</li>`).join("")}</ul>`
     : "";
+  const okres = ranga ? "/ 30 dni" : p.okres === "jednorazowo" ? "" : esc(p.okres);
 
   return `
-    <article class="product ${p.kategoria === "rangi" ? "is-rank" : ""}" data-kat="${p.kategoria}" style="--accent:${p.kolor || "var(--violet-2)"}">
-      ${p.wyroznienie ? `<span class="ribbon">${esc(p.wyroznienie)}</span>` : ""}
+    <article class="product${p.wyroznienie ? " is-featured" : ""}" style="--accent:${p.kolor || "var(--violet-2)"}">
       <div class="product-top">
-        <h3>${p.kategoria === "rangi" ? `<span class="mono rank-tag">[${esc(p.nazwa)}]</span>` : esc(p.nazwa)}</h3>
-        <span class="period mono">${esc(p.okres)}</span>
+        <h3>${esc(p.nazwa)}</h3>
+        ${p.wyroznienie ? `<span class="badge">${esc(p.wyroznienie)}</span>` : ""}
       </div>
+      ${ranga ? `<p class="prefix">[${esc(p.nazwa)}]</p>` : ""}
       <p class="desc">${esc(p.opis)}</p>
-      <p class="works-in mono">działa: ${esc(tryb(p.tryb).nazwa)}</p>
       ${lista}
       <div class="product-foot">
-        <div class="price">
-          ${promo}
-          <strong>${zl(p.cena)}</strong>
-        </div>
-        <button class="btn btn-pink add" data-dodaj="${p.id}">Do koszyka</button>
+        <div class="price">${promo}<strong>${zl(p.cena)}</strong>${okres ? `<small>${okres}</small>` : ""}</div>
+        <button class="add" data-dodaj="${p.id}">Do koszyka</button>
       </div>
       ${omnibus}
     </article>`;
 }
 
 function renderujTryby() {
-  document.getElementById("tryby").innerHTML = TRYBY.map((t) => `
-    <button role="tab" class="mode-card" data-tryb="${t.id}" aria-selected="${t.id === wybranyTryb}" style="--accent:${t.kolor}">
-      <b>${esc(t.nazwa)}</b>
-      <span>${esc(t.opis)}</span>
-      <small class="mono">${PRODUKTY.filter((p) => p.tryb === t.id).length} produktów</small>
-    </button>`).join("") + `
-    <div class="mode-card is-soon" aria-hidden="true">
-      <b>Wkrótce</b>
-      <span>Kolejne tryby są w drodze</span>
-    </div>`;
+  document.getElementById("tryby").innerHTML = `<span>Tryb</span>` + TRYBY.map((t) => `
+    <button role="tab" class="mode-card" data-tryb="${t.id}" aria-selected="${t.id === wybranyTryb}">${esc(t.nazwa)}</button>`).join("") + `
+    <span class="mode-card is-soon" aria-hidden="true">kolejne wkrótce</span>`;
 }
 
 function renderujKategorie() {
@@ -69,31 +65,44 @@ function renderujKategorie() {
   const przyciski = dostepne.length > 1 ? ["wszystko", ...dostepne] : [];
   document.getElementById("kategorie").innerHTML = przyciski.map((k) => `
     <button role="tab" class="tab" data-kategoria="${k}" aria-selected="${k === wybranaKategoria}">${k === "wszystko" ? "Wszystko" : KATEGORIE[k]}</button>`).join("");
-  document.getElementById("naglowek-trybu").textContent = `Sklep: ${tryb(wybranyTryb).nazwa}`;
 }
 
 function renderujProdukty() {
-  const lista = PRODUKTY.filter((p) => p.tryb === wybranyTryb && (wybranaKategoria === "wszystko" || p.kategoria === wybranaKategoria));
-  document.getElementById("produkty").innerHTML = lista.map(kartaProduktu).join("");
+  const wTrybie = PRODUKTY.filter((p) => p.tryb === wybranyTryb);
+  const kategorie = Object.keys(KATEGORIE).filter((k) =>
+    (wybranaKategoria === "wszystko" || k === wybranaKategoria) && wTrybie.some((p) => p.kategoria === k));
+  document.getElementById("produkty").innerHTML = kategorie.map((k) => `
+    <section class="cat" id="kat-${k}">
+      <div class="cat-head">
+        <h2>${KATEGORIE[k]}</h2>
+        ${OPISY_KATEGORII[k] ? `<p>${OPISY_KATEGORII[k]}</p>` : ""}
+      </div>
+      <div class="grid grid-${k}">${wTrybie.filter((p) => p.kategoria === k).map(kartaProduktu).join("")}</div>
+      ${k === "rangi" ? tabelaPorownania() : ""}
+    </section>`).join("");
 }
 
-function renderujPorownanie() {
+function tabelaPorownania() {
   const wiersze = POROWNANIE[wybranyTryb];
   const rangi = PRODUKTY.filter((p) => p.tryb === wybranyTryb && p.kategoria === "rangi");
-  const blok = document.getElementById("porownanie");
-  blok.hidden = !wiersze || rangi.length < 2 || !["wszystko", "rangi"].includes(wybranaKategoria);
-  if (blok.hidden) return;
+  if (!wiersze || rangi.length < 2) return "";
 
   const indeks = (id) => rangi.findIndex((r) => r.id === id);
   const komorka = (w, r, i) => {
-    if (w.wartosci) return w.wartosci[r.id] ? `<span class="mono">${esc(w.wartosci[r.id])}</span>` : `<span class="no">—</span>`;
+    if (w.wartosci) return w.wartosci[r.id] ? esc(w.wartosci[r.id]) : `<span class="no">—</span>`;
     return i >= indeks(w.od) ? `<span class="yes" aria-label="tak">✓</span>` : `<span class="no" aria-label="nie">—</span>`;
   };
 
-  document.getElementById("tabela-porownania").innerHTML = `
-    <thead><tr><th scope="col"><span class="sr-only">Cecha</span></th>${rangi.map((r) => `<th scope="col" style="--accent:${r.kolor}"><span class="mono rank-tag">[${esc(r.nazwa)}]</span></th>`).join("")}</tr></thead>
-    <tbody>${wiersze.map((w) => `<tr><th scope="row">${esc(w.cecha)}</th>${rangi.map((r, i) => `<td>${komorka(w, r, i)}</td>`).join("")}</tr>`).join("")}</tbody>
-    <tfoot><tr><th scope="row">Cena</th>${rangi.map((r) => `<td><strong>${zl(r.cena)}</strong><small class="mono">${esc(r.okres)}</small><button class="btn btn-pink add" data-dodaj="${r.id}">Do koszyka</button></td>`).join("")}</tr></tfoot>`;
+  return `
+    <details class="compare" open>
+      <summary>Porównanie rang</summary>
+      <div class="compare-scroll">
+        <table class="compare-table">
+          <thead><tr><th scope="col"><span class="sr-only">Cecha</span></th>${rangi.map((r) => `<th scope="col" style="--accent:${r.kolor}">${esc(r.nazwa)}</th>`).join("")}</tr></thead>
+          <tbody>${wiersze.map((w) => `<tr><th scope="row">${esc(w.cecha)}</th>${rangi.map((r, i) => `<td>${komorka(w, r, i)}</td>`).join("")}</tr>`).join("")}</tbody>
+        </table>
+      </div>
+    </details>`;
 }
 
 function ustawTryb(id) {
@@ -103,7 +112,6 @@ function ustawTryb(id) {
   renderujTryby();
   renderujKategorie();
   renderujProdukty();
-  renderujPorownanie();
 }
 
 /* ---------- koszyk ---------- */
@@ -138,7 +146,7 @@ function renderujKoszyk() {
         <li>
           <div>
             <b>${esc(p.nazwa)}</b>
-            <small><span class="cart-mode" style="--accent:${tryb(p.tryb).kolor}">${esc(tryb(p.tryb).nazwa)}</span> ${esc(p.okres)} · ${zl(p.cena)}</small>
+            <small><span class="cart-mode">${esc(tryb(p.tryb).nazwa)} ·</span> ${esc(p.okres)} · ${zl(p.cena)}</small>
           </div>
           <div class="qty">
             <button data-ilosc="${p.id}" data-zmiana="-1" aria-label="Mniej">−</button>
@@ -331,8 +339,7 @@ document.addEventListener("click", (e) => {
     wybranaKategoria = t.dataset.kategoria;
     document.querySelectorAll(".tab").forEach((b) => b.setAttribute("aria-selected", b === t));
     renderujProdukty();
-    renderujPorownanie();
-  }
+    }
 });
 
 formularz.addEventListener("submit", (e) => {
@@ -347,7 +354,6 @@ document.addEventListener("keydown", (e) => {
 renderujTryby();
 renderujKategorie();
 renderujProdukty();
-renderujPorownanie();
 renderujKoszyk();
 ustawKrok("lista");
 if (location.hash === "#koszyk") otworz();

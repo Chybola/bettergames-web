@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/sklep.css">
 </head>
-<body data-platki="8">
+<body class="page-shop">
 
   <header class="nav">
     <div class="wrap">
@@ -41,52 +41,34 @@
   </header>
 
   <main>
-    <section class="shop-hero">
+    <section class="shop-head">
       <div class="wrap">
-        <p class="kicker">Sklep serwera</p>
-        <h1 class="td-pink">Sklep</h1>
-        <div class="shop-hero-row">
-          <p>Każdy tryb ma osobny sklep, a ranga działa w trybie, w którym ją kupisz. Na start ruszamy z GenBlockiem — kolejne tryby dojdą wkrótce. Płacisz kodem paysafecard albo BLIK-iem na telefon (przez ticket na Discordzie), a zakup nadaje <b>administrator</b> po ręcznym sprawdzeniu kodu — zwykle w ciągu kilku godzin. Nie musisz być wtedy w grze.</p>
-          <div class="hero-side">
-            <ul class="facts">
-              <li><b>Ceny brutto</b> w złotówkach</li>
-              <li><b>Pomoc:</b> ticket na Discordzie</li>
-            </ul>
-            <div class="pay-badges" aria-label="Metody płatności">
-            <span class="pay-badge">paysafecard</span>
-            <span class="pay-badge pay-blik">blik</span>
-            </div>
-            <p class="secure-note">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
-              Kod paysafecard widzi tylko administracja i po sprawdzeniu usuwamy go z bazy. BLIK robisz na numer, który poda admin w tickecie.
-            </p>
-          </div>
+        <div>
+          <h1>Sklep</h1>
+          <p>Rangi, zestawy i klucze do GenBlocka. Zakup nadaje administrator po sprawdzeniu płatności — nie musisz być wtedy w grze.</p>
         </div>
+        <ul class="shop-facts">
+          <li><span>Płatność</span><b>paysafecard, BLIK</b></li>
+          <li><span>Realizacja</span><b>zwykle do kilku godzin</b></li>
+          <li><span>Pomoc</span><b><a href="https://discord.gg/bettergame" target="_blank" rel="noopener">ticket na Discordzie</a></b></li>
+        </ul>
       </div>
     </section>
 
+    <div class="shop-bar">
+      <div class="wrap">
+        <div class="mode-pick" id="tryby" role="tablist" aria-label="Tryb gry"></div>
+        <div class="tabs" id="kategorie" role="tablist" aria-label="Kategoria"></div>
+      </div>
+    </div>
+
     <section class="shop">
       <div class="wrap">
-        <p class="step-label"><span class="mono">01</span> Wybierz tryb, w którym grasz</p>
-        <div class="mode-pick" id="tryby" role="tablist" aria-label="Tryb gry"></div>
-
-        <div class="shop-bar">
-          <p class="step-label"><span class="mono">02</span> <span id="naglowek-trybu">Produkty</span></p>
-          <div class="tabs" id="kategorie" role="tablist" aria-label="Kategoria"></div>
-        </div>
-
-        <div class="products" id="produkty"></div>
-
-        <div class="compare" id="porownanie" hidden>
-          <p class="step-label"><span class="mono">03</span> Porównaj rangi</p>
-          <div class="compare-scroll">
-            <table class="compare-table" id="tabela-porownania"></table>
-          </div>
-        </div>
+        <div id="produkty"></div>
 
         <p class="shop-legal">
           Kupując, zawierasz umowę ze sprzedawcą wskazanym w <a href="regulamin.html">regulaminie sklepu</a>.
-          Jeśli masz mniej niż 18 lat, poproś rodzica lub opiekuna o zgodę na zakup.
+          Ceny brutto w złotówkach. Jeśli masz mniej niż 18 lat, poproś rodzica lub opiekuna o zgodę na zakup.
         </p>
       </div>
     </section>
@@ -132,7 +114,7 @@
         <span>Płatność</span>
         <div class="pay-methods">
           <label><input type="radio" name="platnosc" value="paysafecard" checked><b>paysafecard</b></label>
-          <label><input type="radio" name="platnosc" value="blik"><span class="pay-badge pay-blik">blik</span><b>BLIK na telefon (przez Discord)</b></label>
+          <label><input type="radio" name="platnosc" value="blik"><b>BLIK na telefon</b></label>
         </div>
       </fieldset>
 
@@ -143,7 +125,7 @@
       <label class="field" data-tylko="paysafecard">
         <span>Kod paysafecard</span>
         <textarea name="kodypsc" rows="3" autocomplete="off" spellcheck="false" placeholder="1234 5678 9012 3456"></textarea>
-        <small>16 cyfr — kilka kodów, każdy w nowej linii, maks. 5. Łączna wartość kodów musi pokrywać kwotę zamówienia.</small>
+        <small>16 cyfr — kilka kodów, każdy w nowej linii, maks. 5. Łączna wartość kodów musi pokrywać kwotę zamówienia. Kod widzi tylko administracja, po sprawdzeniu usuwamy go z bazy.</small>
       </label>
 
       <p class="field" data-tylko="blik" hidden>
