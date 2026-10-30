@@ -46,7 +46,7 @@
         <p class="kicker">Sklep serwera</p>
         <h1 class="td-pink">Sklep</h1>
         <div class="shop-hero-row">
-          <p>Każdy tryb ma osobny sklep, a ranga działa w trybie, w którym ją kupisz. Na start ruszamy z GenBlockiem — kolejne tryby dojdą wkrótce. Płacisz kodem paysafecard, a zakup nadaje <b>administrator</b> po ręcznym sprawdzeniu kodu — zwykle w ciągu kilku godzin. Nie musisz być wtedy w grze.</p>
+          <p>Każdy tryb ma osobny sklep, a ranga działa w trybie, w którym ją kupisz. Na start ruszamy z GenBlockiem — kolejne tryby dojdą wkrótce. Płacisz kodem paysafecard albo BLIK-iem na telefon (przez ticket na Discordzie), a zakup nadaje <b>administrator</b> po ręcznym sprawdzeniu kodu — zwykle w ciągu kilku godzin. Nie musisz być wtedy w grze.</p>
           <div class="hero-side">
             <ul class="facts">
               <li><b>Ceny brutto</b> w złotówkach</li>
@@ -54,10 +54,11 @@
             </ul>
             <div class="pay-badges" aria-label="Metody płatności">
             <span class="pay-badge">paysafecard</span>
+            <span class="pay-badge pay-blik">blik</span>
             </div>
             <p class="secure-note">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
-              Kod paysafecard widzi tylko administracja — po sprawdzeniu usuwamy go z naszej bazy.
+              Kod paysafecard widzi tylko administracja i po sprawdzeniu usuwamy go z bazy. BLIK robisz na numer, który poda admin w tickecie.
             </p>
           </div>
         </div>
@@ -128,12 +129,25 @@
       </label>
 
       <fieldset class="field">
-        <span>Płatność: paysafecard</span>
-        <input type="hidden" name="platnosc" value="paysafecard">
-        <textarea name="kodypsc" rows="3" autocomplete="off" spellcheck="false" placeholder="1234 5678 9012 3456" required></textarea>
-        <small>Wpisz kod (16 cyfr) — kilka kodów, każdy w nowej linii, maks. 5. Łączna wartość kodów musi pokrywać kwotę zamówienia.
-          <b>Zakup nadaje administrator</b> po ręcznym sprawdzeniu kodu, zwykle w ciągu kilku godzin. Ranga działa od razu po zatwierdzeniu (nawet jeśli nie grasz), klucze dostaniesz przy wejściu na GenBlock.</small>
+        <span>Płatność</span>
+        <div class="pay-methods">
+          <label><input type="radio" name="platnosc" value="paysafecard" checked><b>paysafecard</b></label>
+          <label><input type="radio" name="platnosc" value="blik"><span class="pay-badge pay-blik">blik</span><b>BLIK na telefon (przez Discord)</b></label>
+        </div>
       </fieldset>
+
+      <label class="field" data-tylko="paysafecard">
+        <span>Kod paysafecard</span>
+        <textarea name="kodypsc" rows="3" autocomplete="off" spellcheck="false" placeholder="1234 5678 9012 3456"></textarea>
+        <small>16 cyfr — kilka kodów, każdy w nowej linii, maks. 5. Łączna wartość kodów musi pokrywać kwotę zamówienia.</small>
+      </label>
+
+      <p class="field" data-tylko="blik" hidden>
+        <small>Po złożeniu zamówienia otwórz <b>ticket na Discordzie</b> (<a href="https://discord.gg/bettergame" target="_blank" rel="noopener">discord.gg/bettergame</a>, kanał #ticket) i podaj numer zamówienia.
+          Administrator poda ci numer telefonu do przelewu BLIK.</small>
+      </p>
+
+      <p class="field"><small><b>Zakup nadaje administrator</b> po sprawdzeniu płatności, zwykle w ciągu kilku godzin. Ranga działa od razu po zatwierdzeniu (nawet jeśli nie grasz), klucze dostaniesz przy wejściu na GenBlock.</small></p>
 
       <div class="consents">
         <label class="check">
@@ -180,7 +194,7 @@
             <span>Better<b>Game</b></span>
           </a>
           <p>Serwer Minecraft. IP: <span class="mono">bettergame.pl</span></p>
-          <div class="pay-row"><span>PAYSAFECARD</span></div>
+          <div class="pay-row"><span>PAYSAFECARD</span><span>BLIK</span></div>
         </div>
         <div>
           <h4>Serwer</h4>

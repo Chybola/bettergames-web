@@ -205,6 +205,14 @@ formularz.elements.nick.addEventListener("input", (e) => {
   }, 400);
 });
 
+// Pole na kody PSC tylko przy paysafecard, instrukcja ticketu tylko przy BLIK
+formularz.addEventListener("change", (e) => {
+  if (e.target.name !== "platnosc") return;
+  formularz.querySelectorAll("[data-tylko]").forEach((el) => {
+    el.hidden = el.dataset.tylko !== e.target.value;
+  });
+});
+
 // Kody PSC z pola tekstowego: każdy kod w osobnej linii, same cyfry
 function kodyPsc() {
   return formularz.elements.kodypsc.value.split(/\n+/).map((k) => k.replace(/\D/g, "")).filter(Boolean);
@@ -218,7 +226,7 @@ function sprawdzFormularz() {
   if (!/^[A-Za-z0-9_]{3,16}$/.test(nick)) return "Nick musi mieć 3–16 znaków: litery, cyfry lub _.";
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return "Podaj poprawny adres e-mail.";
   const kody = kodyPsc();
-  if (kody.length < 1 || kody.length > 5) return "Wpisz od 1 do 5 kodów paysafecard.";
+  if (f.platnosc.value === "paysafecard" && (kody.length < 1 || kody.length > 5)) return "Wpisz od 1 do 5 kodów paysafecard.";
   if (kody.some((k) => k.length !== 16)) return "Kod paysafecard ma 16 cyfr — sprawdź, czy dobrze go przepisałeś.";
   if (!f.regulamin.checked) return "Musisz zaakceptować regulamin i politykę prywatności.";
   if (!f.tresci_cyfrowe.checked) return "Zaznacz zgodę na natychmiastowe dostarczenie treści cyfrowych.";
@@ -242,9 +250,9 @@ async function zloz() {
   const zamowienie = {
     nick: f.nick.value.trim(),
     email: f.email.value.trim(),
-    platnosc: "paysafecard",
-    // kody sprawdza ręcznie administrator w panelu
-    kodyPsc: kodyPsc(),
+    platnosc: f.platnosc.value,
+    // kody sprawdza ręcznie administrator w panelu; przy BLIK gracz otwiera ticket na Discordzie
+    kodyPsc: f.platnosc.value === "paysafecard" ? kodyPsc() : [],
     pozycje: koszyk.map(({ id, ilosc }) => ({ id, ilosc, tryb: produkt(id).tryb })),
     suma: suma(),
     zgody: {
@@ -278,10 +286,17 @@ async function zloz() {
     zapiszKoszyk(koszyk);
     renderujKoszyk();
     formularz.reset();
-    pokazInfo(`Zamówienie #${wynik.id} przyjęte`,
-      `Administrator sprawdzi kod paysafecard i nada zakup na konto ${zamowienie.nick} — zwykle w ciągu kilku godzin. ` +
-      "Nie musisz być wtedy w grze: ranga zadziała od razu po zatwierdzeniu, a klucze dostaniesz przy wejściu na GenBlock. " +
-      "Problem? Napisz ticket na Discordzie i podaj numer zamówienia.");
+    if (zamowienie.platnosc === "blik") {
+      pokazInfo(`Zamówienie #${wynik.id} przyjęte — zapłać BLIK-iem`,
+        `Otwórz ticket na Discordzie (discord.gg/bettergame, kanał #ticket) i napisz: „Zamówienie #${wynik.id}, BLIK, ${zamowienie.nick}”. ` +
+        "Administrator poda ci numer telefonu do przelewu BLIK, a po wpłacie nada zakup. " +
+        "Ranga zadziała od razu po zatwierdzeniu (nawet jeśli nie grasz), klucze dostaniesz przy wejściu na GenBlock.");
+    } else {
+      pokazInfo(`Zamówienie #${wynik.id} przyjęte`,
+        `Administrator sprawdzi kod paysafecard i nada zakup na konto ${zamowienie.nick} — zwykle w ciągu kilku godzin. ` +
+        "Nie musisz być wtedy w grze: ranga zadziała od razu po zatwierdzeniu, a klucze dostaniesz przy wejściu na GenBlock. " +
+        "Problem? Napisz ticket na Discordzie i podaj numer zamówienia.");
+    }
   } catch {
     pole.textContent = "Nie udało się złożyć zamówienia. Spróbuj ponownie za chwilę.";
   } finally {
