@@ -206,12 +206,18 @@ formularz.elements.nick.addEventListener("input", (e) => {
 });
 
 // Pole na kody PSC tylko przy paysafecard, instrukcja ticketu tylko przy BLIK
-formularz.addEventListener("change", (e) => {
-  if (e.target.name !== "platnosc") return;
+function pokazPolaPlatnosci() {
+  const wybrana = formularz.elements.platnosc.value;
   formularz.querySelectorAll("[data-tylko]").forEach((el) => {
-    el.hidden = el.dataset.tylko !== e.target.value;
+    el.hidden = el.dataset.tylko !== wybrana;
   });
+}
+formularz.addEventListener("change", (e) => {
+  if (e.target.name === "platnosc") pokazPolaPlatnosci();
 });
+pokazPolaPlatnosci();
+// czas otwarcia strony - backend odrzuca zamówienia wysłane podejrzanie szybko (boty)
+const otwarto = Date.now();
 
 // Kody PSC z pola tekstowego: każdy kod w osobnej linii, same cyfry
 function kodyPsc() {
@@ -226,8 +232,9 @@ function sprawdzFormularz() {
   if (!/^[A-Za-z0-9_]{3,16}$/.test(nick)) return "Nick musi mieć 3–16 znaków: litery, cyfry lub _.";
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return "Podaj poprawny adres e-mail.";
   const kody = kodyPsc();
-  if (f.platnosc.value === "paysafecard" && (kody.length < 1 || kody.length > 5)) return "Wpisz od 1 do 5 kodów paysafecard.";
-  if (kody.some((k) => k.length !== 16)) return "Kod paysafecard ma 16 cyfr — sprawdź, czy dobrze go przepisałeś.";
+  const psc = f.platnosc.value === "paysafecard";
+  if (psc && (kody.length < 1 || kody.length > 5)) return "Wpisz od 1 do 5 kodów paysafecard.";
+  if (psc && kody.some((k) => k.length !== 16)) return "Kod paysafecard ma 16 cyfr — sprawdź, czy dobrze go przepisałeś.";
   if (!f.regulamin.checked) return "Musisz zaakceptować regulamin i politykę prywatności.";
   if (!f.tresci_cyfrowe.checked) return "Zaznacz zgodę na natychmiastowe dostarczenie treści cyfrowych.";
   if (!f.pelnoletnosc.checked) return "Potwierdź pełnoletność lub zgodę opiekuna.";
@@ -253,6 +260,8 @@ async function zloz() {
     platnosc: f.platnosc.value,
     // kody sprawdza ręcznie administrator w panelu; przy BLIK gracz otwiera ticket na Discordzie
     kodyPsc: f.platnosc.value === "paysafecard" ? kodyPsc() : [],
+    strona: f.strona.value,
+    sekundy: Math.round((Date.now() - otwarto) / 1000),
     pozycje: koszyk.map(({ id, ilosc }) => ({ id, ilosc, tryb: produkt(id).tryb })),
     suma: suma(),
     zgody: {
@@ -286,6 +295,7 @@ async function zloz() {
     zapiszKoszyk(koszyk);
     renderujKoszyk();
     formularz.reset();
+    pokazPolaPlatnosci();
     if (zamowienie.platnosc === "blik") {
       pokazInfo(`Zamówienie #${wynik.id} przyjęte — zapłać BLIK-iem`,
         `Otwórz ticket na Discordzie (discord.gg/bettergame, kanał #ticket) i napisz: „Zamówienie #${wynik.id}, BLIK, ${zamowienie.nick}”. ` +

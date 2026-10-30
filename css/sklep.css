@@ -359,6 +359,8 @@ body.drawer-open { overflow: hidden; }
 /* ---------- formularz ---------- */
 .checkout { display: grid; gap: 18px; align-content: start; }
 .field { display: grid; gap: 6px; border: 0; padding: 0; margin: 0; min-width: 0; }
+.field[hidden] { display: none; }
+.pole-pulapka { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .field > span { font-weight: 600; font-size: 15px; }
 .field small { color: var(--dim); font-size: 13px; }
 .field input:not([type]),
