@@ -91,6 +91,10 @@
 }
 .ip-box strong { font-size: 22px; font-weight: 600; }
 .hero-note { font-size: 14px; color: var(--dim); margin-top: 14px; }
+.ip-box-bedrock { display: flex; width: fit-content; margin-top: 10px; }
+.ip-box-bedrock small { color: var(--ok); }
+.ip-box-bedrock strong { font-size: 18px; }
+.ip-box-bedrock strong span { font-size: 14px; color: var(--muted); font-weight: 400; margin-left: 6px; }
 
 /* logo + czat */
 .hero-art {
@@ -333,6 +337,7 @@
 }
 .news-main h3 { font-size: 34px; }
 .news-main ul { margin: 18px 0 0; padding-left: 20px; color: var(--muted); }
+.news code { font-family: var(--f-mono); background: rgba(255, 255, 255, .06); padding: 1px 6px; border-radius: 4px; }
 .news-main li::marker { color: var(--pink); }
 .news-side { display: grid; gap: 20px; }
 

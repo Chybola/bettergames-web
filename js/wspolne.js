@@ -44,12 +44,14 @@ function pokazToast(tekst) {
   toastTimer = setTimeout(() => el.classList.remove("show"), 2600);
 }
 
-function kopiujIP() {
-  const gotowe = () => pokazToast(`Skopiowano: ${ADRES_SERWERA}`);
+// data-kopiuj-ip="..." kopiuje podany adres (np. Bedrock), puste = adres Java
+function kopiujIP(e) {
+  const adres = e.currentTarget.dataset.kopiujIp || ADRES_SERWERA;
+  const gotowe = () => pokazToast(`Skopiowano: ${adres}`);
   if (navigator.clipboard) {
-    navigator.clipboard.writeText(ADRES_SERWERA).then(gotowe, () => pokazToast(ADRES_SERWERA));
+    navigator.clipboard.writeText(adres).then(gotowe, () => pokazToast(adres));
   } else {
-    pokazToast(ADRES_SERWERA);
+    pokazToast(adres);
   }
 }
 
