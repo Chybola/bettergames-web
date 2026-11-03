@@ -4,5 +4,18 @@
   "installCommand": "echo brak zaleznosci",
   "buildCommand": "echo strona statyczna - bez budowania",
   "outputDirectory": ".",
-  "cleanUrls": true
+  "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/sklep/panel",
+      "destination": "/sklep/panel/",
+      "permanent": false
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/sklep/panel/:path*",
+      "destination": "https://panel.bettergame.pl/sklep/panel/:path*"
+    }
+  ]
 }
