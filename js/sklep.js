@@ -310,7 +310,7 @@ async function zloz() {
     pokazPolaPlatnosci();
     if (zamowienie.platnosc === "blik") {
       pokazInfo(`Zamówienie #${wynik.id} przyjęte — zapłać BLIK-iem`,
-        `Otwórz ticket na Discordzie (discord.gg/bettergame, kanał #ticket) i napisz: „Zamówienie #${wynik.id}, BLIK, ${zamowienie.nick}”. ` +
+        `Otwórz ticket na Discordzie (discord.gg/CQPRgtxKVa, kanał #ticket) i napisz: „Zamówienie #${wynik.id}, BLIK, ${zamowienie.nick}”. ` +
         "Administrator poda ci numer telefonu do przelewu BLIK, a po wpłacie nada zakup. " +
         "Ranga zadziała od razu po zatwierdzeniu (nawet jeśli nie grasz), klucze dostaniesz przy wejściu na GenBlock.");
     } else {
