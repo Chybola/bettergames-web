@@ -196,13 +196,17 @@ function ustawKrok(nowy) {
 
 const formularz = document.getElementById("formularz");
 
+// Java: 3-16 znaków; Bedrock (Floodgate): kropka + nick, razem maks. 16 znaków
+const NICK_JAVA = /^[A-Za-z0-9_]{3,16}$/;
+const NICK_BEDROCK = /^\.[A-Za-z0-9_]{1,15}$/;
+
 // podgląd skórki z mc-heads.net, żeby kupujący zauważył literówkę w nicku
 let czasPodgladu;
 formularz.elements.nick.addEventListener("input", (e) => {
   clearTimeout(czasPodgladu);
   const nick = e.target.value.trim();
   const podglad = document.getElementById("podglad-skina");
-  if (!/^[A-Za-z0-9_]{3,16}$/.test(nick)) {
+  if (!NICK_JAVA.test(nick)) {
     podglad.hidden = true;
     return;
   }
@@ -237,7 +241,7 @@ function sprawdzFormularz() {
   const nick = f.nick.value.trim();
   const email = f.email.value.trim();
 
-  if (!/^[A-Za-z0-9_]{3,16}$/.test(nick)) return "Nick musi mieć 3–16 znaków: litery, cyfry lub _.";
+  if (!NICK_JAVA.test(nick) && !NICK_BEDROCK.test(nick)) return "Nick: 3–16 znaków (litery, cyfry, _). Gracze Bedrock wpisują nick z kropką na początku, np. .Steve";
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return "Podaj poprawny adres e-mail.";
   const kody = kodyPsc();
   const psc = f.platnosc.value === "paysafecard";
