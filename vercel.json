@@ -14,8 +14,12 @@
   ],
   "rewrites": [
     {
-      "source": "/sklep/panel/:path*",
-      "destination": "https://panel.bettergame.pl/sklep/panel/:path*"
+      "source": "/sklep/panel/",
+      "destination": "https://panel.bettergame.pl/sklep/panel/"
+    },
+    {
+      "source": "/sklep/panel/:path+",
+      "destination": "https://panel.bettergame.pl/sklep/panel/:path+"
     }
   ]
 }
