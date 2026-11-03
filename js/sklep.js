@@ -256,7 +256,99 @@ function sprawdzFormularz() {
 function pokazInfo(tytul, tekst) {
   document.getElementById("info-tytul").textContent = tytul;
   document.getElementById("info-tekst").textContent = tekst;
+  document.getElementById("czat").hidden = true;
   ustawKrok("info");
+}
+
+/* ---------- czat zamówienia BLIK: kod do tytułu przelewu i status na żywo ---------- */
+
+const ADRES_STATUSU = ADRES_ZAMOWIEN.replace("zamowienie.php", "status.php");
+const KLUCZ_BLIK = "bg_zamowienie_blik";
+let odpytywanie = null;
+
+function dymek(html, klasa = "") {
+  const d = document.createElement("div");
+  d.className = "dymek " + klasa;
+  d.innerHTML = `<img src="img/favicon.png" alt=""><div class="dymek-tresc"><small>BetterGame</small>${html}</div>`;
+  document.getElementById("czat").append(d);
+  return d;
+}
+
+function kopiujPole(tekst) {
+  if (navigator.clipboard) navigator.clipboard.writeText(tekst).then(() => pokazToast(`Skopiowano: ${tekst}`), () => pokazToast(tekst));
+  else pokazToast(tekst);
+}
+
+function pokazCzat(z) {
+  const czat = document.getElementById("czat");
+  czat.innerHTML = "";
+  czat.hidden = false;
+  document.getElementById("info-tytul").textContent = `Zamówienie #${z.id} - zapłać BLIK-iem`;
+  document.getElementById("info-tekst").textContent = "";
+  dymek(`Cześć <b>${esc(z.nick)}</b>! Twoje zamówienie <b>#${z.id}</b> czeka na wpłatę.`);
+  const tel = z.telefon ? `<div><span>Numer telefonu</span><strong>${esc(z.telefon)}</strong><button data-kopiuj="${esc(z.telefon.replace(/\s/g, ""))}">Kopiuj</button></div>` : "";
+  dymek(`Zrób przelew <b>BLIK na telefon</b>:
+    <div class="dane-blik">${tel}
+      <div><span>Kwota</span><strong>${zl(z.suma)}</strong><button data-kopiuj="${(z.suma / 100).toFixed(2).replace(".", ",")}">Kopiuj</button></div>
+      <div class="kod"><span>Tytuł przelewu</span><strong>${esc(z.kod)}</strong><button data-kopiuj="${esc(z.kod)}">Kopiuj</button></div>
+    </div>`);
+  dymek(z.telefon
+    ? "W tytule wpisz <b>dokładnie swój kod</b>. Gdy wpłata dotrze, administrator wpisze kod i zakup wpadnie sam - ranga od razu (nawet jeśli nie grasz), klucze przy wejściu na GenBlock."
+    : `Numer telefonu do BLIK poda administrator - napisz na <a href="https://discord.gg/CQPRgtxKVa" target="_blank" rel="noopener">Discordzie</a> (kanał #ticket) i podaj swój kod. Po wpłacie zakup wpadnie sam.`);
+  const status = dymek(`<span class="kropki">Czekam na Twoją wpłatę</span>`, "status");
+  ustawKrok("info");
+  odpytuj(z, status);
+}
+
+function odpytuj(z, status) {
+  clearInterval(odpytywanie);
+  const sprawdz = async () => {
+    try {
+      const odp = await fetch(`${ADRES_STATUSU}?id=${z.id}&t=${encodeURIComponent(z.token)}`, { cache: "no-store" });
+      if (odp.status === 404) {
+        zakonczBlik();
+        return;
+      }
+      const s = await odp.json();
+      if (s.status === "zatwierdzone") {
+        status.className = "dymek ok";
+        status.querySelector(".dymek-tresc").innerHTML = `<small>BetterGame</small>✅ <b>Wpłata potwierdzona!</b> ${esc(z.nick)} dostaje zakup - ranga działa od razu. Dziękujemy za wsparcie serwera!`;
+        zakonczBlik();
+      } else if (s.status === "odrzucone") {
+        status.className = "dymek zle";
+        status.querySelector(".dymek-tresc").innerHTML = `<small>BetterGame</small>❌ Zamówienie odrzucone${s.powod ? ": " + esc(s.powod) : ""}. Pytania? Napisz na Discordzie.`;
+        zakonczBlik();
+      }
+    } catch {
+      /* brak sieci - spróbujemy za chwilę */
+    }
+  };
+  odpytywanie = setInterval(sprawdz, 8000);
+  sprawdz();
+}
+
+function zakonczBlik() {
+  clearInterval(odpytywanie);
+  odpytywanie = null;
+  try { localStorage.removeItem(KLUCZ_BLIK); } catch { /* bez pamięci przeglądarki */ }
+  document.getElementById("czat-wroc").hidden = true;
+}
+
+// Zamówienie BLIK zapamiętane w przeglądarce - po odświeżeniu strony można wrócić do kodu i statusu
+function przywrocBlik() {
+  let z = null;
+  try { z = JSON.parse(localStorage.getItem(KLUCZ_BLIK) || "null"); } catch { z = null; }
+  if (!z || Date.now() - (z.czas || 0) > 3 * 24 * 3600 * 1000) {
+    zakonczBlik();
+    return;
+  }
+  const przycisk = document.getElementById("czat-wroc");
+  przycisk.hidden = false;
+  przycisk.onclick = () => {
+    przycisk.hidden = true;
+    otworz();
+    pokazCzat(z);
+  };
 }
 
 async function zloz() {
@@ -270,7 +362,7 @@ async function zloz() {
     nick: f.nick.value.trim(),
     email: f.email.value.trim(),
     platnosc: f.platnosc.value,
-    // kody sprawdza ręcznie administrator w panelu; przy BLIK gracz otwiera ticket na Discordzie
+    // kody PSC sprawdza ręcznie administrator w panelu; przy BLIK gracz dostaje kod do tytułu przelewu
     kodyPsc: f.platnosc.value === "paysafecard" ? kodyPsc() : [],
     strona: f.strona.value,
     sekundy: Math.round((Date.now() - otwarto) / 1000),
@@ -309,10 +401,9 @@ async function zloz() {
     formularz.reset();
     pokazPolaPlatnosci();
     if (zamowienie.platnosc === "blik") {
-      pokazInfo(`Zamówienie #${wynik.id} przyjęte — zapłać BLIK-iem`,
-        `Otwórz ticket na Discordzie (discord.gg/CQPRgtxKVa, kanał #ticket) i napisz: „Zamówienie #${wynik.id}, BLIK, ${zamowienie.nick}”. ` +
-        "Administrator poda ci numer telefonu do przelewu BLIK, a po wpłacie nada zakup. " +
-        "Ranga zadziała od razu po zatwierdzeniu (nawet jeśli nie grasz), klucze dostaniesz przy wejściu na GenBlock.");
+      const z = { id: wynik.id, token: wynik.token, kod: wynik.kod, telefon: wynik.telefon || "", suma: wynik.suma, nick: zamowienie.nick, czas: Date.now() };
+      try { localStorage.setItem(KLUCZ_BLIK, JSON.stringify(z)); } catch { /* bez pamięci przeglądarki */ }
+      pokazCzat(z);
     } else {
       pokazInfo(`Zamówienie #${wynik.id} przyjęte`,
         `Administrator sprawdzi kod paysafecard i nada zakup na konto ${zamowienie.nick} — zwykle w ciągu kilku godzin. ` +
@@ -327,6 +418,12 @@ async function zloz() {
 }
 
 /* ---------- zdarzenia ---------- */
+
+// przyciski "Kopiuj" w czacie BLIK
+document.addEventListener("click", (e) => {
+  const k = e.target.closest("[data-kopiuj]");
+  if (k) kopiujPole(k.dataset.kopiuj);
+});
 
 document.addEventListener("click", (e) => {
   const t = e.target.closest("button, [data-zamknij-koszyk]");
@@ -361,3 +458,4 @@ renderujProdukty();
 renderujKoszyk();
 ustawKrok("lista");
 if (location.hash === "#koszyk") otworz();
+przywrocBlik();

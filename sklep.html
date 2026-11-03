@@ -129,8 +129,8 @@
       </label>
 
       <p class="field" data-tylko="blik" hidden>
-        <small>Po złożeniu zamówienia otwórz <b>ticket na Discordzie</b> (<a href="https://discord.gg/CQPRgtxKVa" target="_blank" rel="noopener">discord.gg/CQPRgtxKVa</a>, kanał #ticket) i podaj numer zamówienia.
-          Administrator poda ci numer telefonu do przelewu BLIK.</small>
+        <small>Po złożeniu zamówienia dostaniesz <b>własny kod</b>, kwotę i numer telefonu. Robisz przelew BLIK na telefon i wpisujesz kod w tytule —
+          gdy wpłata dotrze, administrator wpisze kod i zakup wpadnie sam.</small>
       </p>
 
       <p class="field"><small><b>Zakup nadaje administrator</b> po sprawdzeniu płatności, zwykle w ciągu kilku godzin. Ranga działa od razu po zatwierdzeniu (nawet jeśli nie grasz), klucze dostaniesz przy wejściu na GenBlock.</small></p>
@@ -157,6 +157,7 @@
       <div class="done">
         <h3 id="info-tytul"></h3>
         <p id="info-tekst"></p>
+        <div class="czat" id="czat" hidden aria-live="polite"></div>
         <button class="btn btn-ghost" data-zamknij-koszyk>Zamknij</button>
       </div>
     </div>
@@ -170,6 +171,8 @@
       </div>
     </div>
   </aside>
+
+  <button class="czat-wroc" id="czat-wroc" hidden>Twoje zamówienie BLIK czeka na wpłatę - pokaż</button>
 
   <footer class="footer">
     <div class="wrap">

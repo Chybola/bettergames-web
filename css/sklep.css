@@ -367,3 +367,28 @@ body.drawer-open { overflow: hidden; }
   .cart-list li { grid-template-columns: 1fr auto; }
   .line-sum { grid-column: 2; }
 }
+
+/* ---------- czat zamówienia BLIK ---------- */
+.czat { display: grid; gap: 10px; margin: 6px 0 22px; }
+.czat[hidden] { display: none; }
+.dymek { display: flex; gap: 10px; align-items: flex-start; animation: dymek .25s ease; }
+.dymek img { width: 32px; height: 32px; border-radius: 50%; flex: none; background: var(--bg-3); }
+.dymek-tresc { background: var(--bg-3); border: 1px solid var(--line); border-radius: 4px 14px 14px 14px; padding: 10px 13px; font-size: 14.5px; line-height: 1.5; max-width: 100%; }
+.dymek-tresc b { color: var(--text); }
+.dymek-tresc small { color: var(--dim); font-size: 12px; display: block; margin-bottom: 2px; }
+.dane-blik { display: grid; gap: 6px; margin-top: 8px; }
+.dane-blik div { display: flex; justify-content: space-between; align-items: center; gap: 10px; background: var(--bg); border: 1px solid var(--line-2); border-radius: 8px; padding: 7px 10px; }
+.dane-blik span { color: var(--dim); font-size: 12.5px; }
+.dane-blik strong { font-family: var(--f-mono); font-size: 16px; letter-spacing: .5px; }
+.dane-blik .kod strong { color: var(--pink-2); font-size: 19px; }
+.dane-blik button { font: inherit; font-size: 12px; background: none; border: 1px solid var(--line-2); color: var(--muted); border-radius: 6px; padding: 3px 8px; cursor: pointer; }
+.dane-blik button:hover { color: var(--text); border-color: var(--pink); }
+.dymek.status .dymek-tresc { border-color: var(--line-2); }
+.dymek.ok .dymek-tresc { border-color: var(--ok); background: rgba(78, 230, 160, .08); }
+.dymek.zle .dymek-tresc { border-color: #ff7a9a; background: rgba(255, 122, 154, .08); }
+.kropki::after { content: "…"; animation: kropki 1.2s steps(4) infinite; display: inline-block; width: 1em; overflow: hidden; vertical-align: bottom; }
+@keyframes kropki { from { width: 0; } to { width: 1em; } }
+@keyframes dymek { from { opacity: 0; transform: translateY(6px); } }
+.czat-wroc { position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%); z-index: 70; font: inherit; font-weight: 600; font-size: 14px;
+  background: var(--pink); color: #fff; border: 0; border-radius: 99px; padding: 11px 20px; cursor: pointer; box-shadow: 0 8px 24px rgba(0, 0, 0, .35); }
+.czat-wroc[hidden] { display: none; }
