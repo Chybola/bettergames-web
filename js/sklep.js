@@ -286,7 +286,7 @@ function pokazCzat(z) {
   document.getElementById("info-tytul").textContent = `Zamówienie #${z.id} - zapłać BLIK-iem`;
   document.getElementById("info-tekst").textContent = "";
   dymek(`Cześć <b>${esc(z.nick)}</b>! Twoje zamówienie <b>#${z.id}</b> czeka na wpłatę.`);
-  const tel = z.telefon ? `<div><span>Numer telefonu</span><strong>${esc(z.telefon)}</strong><button data-kopiuj="${esc(z.telefon.replace(/\s/g, ""))}">Kopiuj</button></div>` : "";
+  const tel = z.telefon ? `<div><span>Numer telefonu</span><strong>${esc(z.telefon)}</strong><button data-kopiuj="${esc(z.telefon.replace(/\D/g, "").slice(-9))}">Kopiuj</button></div>` : "";
   dymek(`Zrób przelew <b>BLIK na telefon</b>:
     <div class="dane-blik">${tel}
       <div><span>Kwota</span><strong>${zl(z.suma)}</strong><button data-kopiuj="${(z.suma / 100).toFixed(2).replace(".", ",")}">Kopiuj</button></div>
