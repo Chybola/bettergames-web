@@ -122,6 +122,31 @@ const PRODUKTY = [
   },
 ];
 
+// Promocja czasowa: wszystkie ceny -procent w oknie [od, do). Ten sam procent i termin MUSZĄ być w
+// sklep-panel/produkty.php (tam liczy się prawdziwa cena zamówienia). Po "do" ceny wracają same.
+// najnizsza30 = najniższa cena z 30 dni przed obniżką (dyrektywa Omnibus), w groszach.
+const PROMOCJA = {
+  nazwa: "BLACK FRIDAY",
+  procent: 50,
+  od: "2026-11-23T00:00:00+01:00",
+  do: "2026-12-01T00:00:00+01:00",
+  koniecTekst: "30.11, 23:59",
+  najnizsza30: {
+    "gen-vip": 999, "gen-svip": 1999, "gen-sponsor": 2999, "gen-elita": 3999, "gen-better": 4999,
+    "gen-zestaw-better-plus": 7499, "gen-zestaw-better": 6499,
+    "gen-klucz-zwykly": 199, "gen-klucz-epicki": 499, "gen-klucz-legendarny": 999,
+  },
+};
+PROMOCJA.aktywna = Date.now() >= Date.parse(PROMOCJA.od) && Date.now() < Date.parse(PROMOCJA.do);
+if (PROMOCJA.aktywna) {
+  for (const p of PRODUKTY) {
+    p.cenaPrzed = p.cena;
+    p.najnizsza30 = PROMOCJA.najnizsza30[p.id] ?? p.cena;
+    p.cena = Math.floor((p.cena * (100 - PROMOCJA.procent)) / 100);
+    p.wyroznienie = `${PROMOCJA.nazwa} -${PROMOCJA.procent}%`;
+  }
+}
+
 // Tabela porównania rang w trybie. "od" = cecha od tej rangi w górę, "wartosci" = osobny tekst dla każdej rangi.
 const POROWNANIE = {
   genblock: [

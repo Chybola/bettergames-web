@@ -392,3 +392,31 @@ body.drawer-open { overflow: hidden; }
 .czat-wroc { position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%); z-index: 70; font: inherit; font-weight: 600; font-size: 14px;
   background: var(--pink); color: #fff; border: 0; border-radius: 99px; padding: 11px 20px; cursor: pointer; box-shadow: 0 8px 24px rgba(0, 0, 0, .35); }
 .czat-wroc[hidden] { display: none; }
+
+/* ---------- baner promocji (PROMOCJA w js/produkty.js) ---------- */
+.promo-banner {
+  background: linear-gradient(90deg, #0b0612, #2a0a3d 40%, #5a0f4a 70%, #0b0612);
+  border-bottom: 1px solid var(--line);
+  padding: 18px 0;
+}
+.promo-banner .wrap {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+.promo-banner strong { font-size: 26px; font-weight: 900; letter-spacing: .02em; color: #fff; }
+.promo-banner strong span { color: var(--pink); }
+.promo-banner p { margin: 0; color: var(--text); flex: 1; min-width: 220px; }
+.promo-banner b {
+  font-variant-numeric: tabular-nums;
+  background: rgba(255, 47, 176, .15);
+  border: 1px solid rgba(255, 47, 176, .5);
+  color: #ffd3ef;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+@media (max-width: 600px) {
+  .promo-banner strong { font-size: 21px; }
+}
