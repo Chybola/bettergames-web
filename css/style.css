@@ -427,3 +427,34 @@ section { padding: 96px 0; }
 @media (prefers-reduced-motion: reduce) {
   .petals { display: none; }
 }
+
+/* ---------- pasek promocji na górze każdej podstrony (PROMOCJA_BAZA w js/wspolne.js) ---------- */
+.promo-top {
+  display: block;
+  background: linear-gradient(90deg, #050307, #2a0a3d 35%, #6b0f52 65%, #050307);
+  border-bottom: 1px solid rgba(255, 47, 176, .45);
+  color: var(--text);
+  text-decoration: none;
+  padding: 9px 0;
+  font-size: 14px;
+}
+.promo-top .wrap { display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap; }
+.promo-top strong { font-size: 17px; font-weight: 900; letter-spacing: .04em; color: #fff; white-space: nowrap; }
+.promo-top strong em { font-style: normal; color: var(--pink); }
+.promo-top-tekst { color: #e9d8f5; }
+.promo-top-licznik {
+  font-family: "JetBrains Mono", monospace;
+  font-variant-numeric: tabular-nums;
+  background: rgba(255, 47, 176, .16);
+  border: 1px solid rgba(255, 47, 176, .55);
+  color: #ffd3ef;
+  padding: 3px 9px;
+  border-radius: 7px;
+  font-size: 13px;
+}
+.promo-top-cta { font-weight: 700; color: var(--pink); white-space: nowrap; }
+.promo-top:hover .promo-top-cta { text-decoration: underline; }
+@media (max-width: 640px) {
+  .promo-top-tekst { display: none; }
+  .promo-top .wrap { gap: 10px; }
+}

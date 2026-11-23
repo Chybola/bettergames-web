@@ -452,27 +452,6 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && szuflada.classList.contains("open")) zamknij();
 });
 
-function renderujPromocje() {
-  const el = document.getElementById("promocja");
-  if (!el || typeof PROMOCJA === "undefined" || !PROMOCJA.aktywna) return;
-  el.hidden = false;
-  el.innerHTML = `<div class="wrap">
-      <strong>${esc(PROMOCJA.nazwa)} <span>-${PROMOCJA.procent}%</span></strong>
-      <p>Wszystkie rangi, zestawy i klucze o połowę taniej — tylko do ${esc(PROMOCJA.koniecTekst)}.</p>
-      <b id="promocja-licznik"></b>
-    </div>`;
-  const licznik = document.getElementById("promocja-licznik");
-  const tik = () => {
-    const ms = Date.parse(PROMOCJA.do) - Date.now();
-    if (ms <= 0) { licznik.textContent = "Promocja zakończona"; return; }
-    const d = Math.floor(ms / 86400000), h = Math.floor(ms / 3600000) % 24, m = Math.floor(ms / 60000) % 60, s = Math.floor(ms / 1000) % 60;
-    licznik.textContent = `Koniec za ${d > 0 ? d + " d " : ""}${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
-  };
-  tik();
-  setInterval(tik, 1000);
-}
-
-renderujPromocje();
 renderujTryby();
 renderujKategorie();
 renderujProdukty();
