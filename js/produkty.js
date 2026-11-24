@@ -8,7 +8,7 @@ const TRYBY = [
   // przedsprzedaz: zakupy czekają w kolejce wydań (serwer "earthsmp") i wpadają w dniu startu trybu
   {
     id: "earthsmp", nazwa: "Earth SMP", opis: "Mapa Ziemi, państwa, wojny", kolor: "#34d399",
-    przedsprzedaz: "Przedsprzedaż - Earth SMP startuje wkrótce. Zakupy wydamy automatycznie w dniu startu, a rangi będą liczone od startu trybu.",
+    przedsprzedaz: "Przedsprzedaż - Earth SMP startuje w piątek 11.12 o 20:00. Zakupy wydamy automatycznie przy starcie, a rangi będą liczone od startu trybu.",
   },
 ];
 
