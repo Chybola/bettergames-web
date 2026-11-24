@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Earth SMP — BetterGame.pl</title>
+  <meta name="description" content="Earth SMP na BetterGame.pl: cała Ziemia w Minecrafcie w skali 1:2000. Państwa, sojusze, wojny i regiony. Start w piątek 11.12.2026 o 20:00.">
+  <link rel="icon" href="img/favicon.png">
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+  <meta name="theme-color" content="#110920">
+  <meta property="og:title" content="Earth SMP — cała Ziemia w Minecrafcie">
+  <meta property="og:description" content="Państwa, sojusze i wojny na mapie Ziemi 1:2000. Start: piątek 11.12, 20:00.">
+  <meta property="og:image" content="https://bettergame.pl/img/earth-swiat.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=bf6">
+  <link rel="stylesheet" href="css/strona-glowna.css">
+  <link rel="stylesheet" href="css/earth.css?v=1">
+</head>
+<body>
+
+  <header class="nav">
+    <div class="wrap">
+      <a class="brand" href="index.html">
+        <img class="brand-logo" src="img/logo-nav.webp" alt="" width="49" height="46">
+        <span>Better<b>Game</b></span>
+      </a>
+      <button class="burger" aria-label="Menu" aria-expanded="false">
+        <svg width="20" height="14" viewBox="0 0 20 14" fill="currentColor"><rect width="20" height="2"/><rect y="6" width="14" height="2"/><rect y="12" width="20" height="2"/></svg>
+      </button>
+      <ul class="nav-links">
+        <li><a href="index.html">Start</a></li>
+        <li><a href="earth.html" aria-current="page">Earth SMP</a></li>
+        <li><a href="sklep.html">Sklep</a></li>
+        <li><a href="regulamin.html">Regulamin</a></li>
+        <li><a href="https://discord.gg/CQPRgtxKVa" target="_blank" rel="noopener">Discord</a></li>
+      </ul>
+      <a class="cart-btn" href="sklep.html#koszyk">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.5L21 8H6.2"/><circle cx="10" cy="20.5" r="1.3"/><circle cx="17" cy="20.5" r="1.3"/></svg>
+        <span class="cart-label">Koszyk</span>
+        <span class="cart-count" data-empty="true">0</span>
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <section class="e-hero">
+      <div class="wrap">
+        <p class="kicker">Nowy tryb</p>
+        <h1 class="td">Cała Ziemia<br><span class="e-green">w Minecrafcie.</span></h1>
+        <p class="lead">Mapa 20 000 × 10 000 kratek w skali 1:2000 — prawdziwe kontynenty, góry i oceany. Zakładasz państwo, zajmujesz teren, zawierasz sojusze i prowadzisz wojny.</p>
+
+        <div class="e-licznik" data-odliczanie="2026-12-11T20:00:00+01:00">
+          <p class="e-licznik-tytul">Start: <b>piątek 11.12, godz. 20:00</b></p>
+          <div class="e-licznik-pola">
+            <div><b data-d>--</b><span>dni</span></div>
+            <div><b data-h>--</b><span>godz.</span></div>
+            <div><b data-m>--</b><span>min</span></div>
+            <div><b data-s>--</b><span>sek</span></div>
+          </div>
+          <p class="e-licznik-po" hidden>Earth SMP już działa — wbijaj na <button class="inline-ip mono" data-kopiuj-ip>bettergame.pl</button>!</p>
+        </div>
+
+        <div class="e-cta">
+          <a class="btn btn-pink" href="sklep.html#earthsmp">Przedsprzedaż rang</a>
+          <a class="btn btn-ghost" href="#mapa">Zobacz mapę</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="o-trybie">
+      <div class="wrap">
+        <div class="sec-head">
+          <div>
+            <p class="kicker">Jak to działa</p>
+            <h2>Państwa, sojusze, wojny</h2>
+          </div>
+          <p>Wszystkie liczby poniżej to aktualne ustawienia serwera — mogą się jeszcze zmienić przed startem.</p>
+        </div>
+        <div class="e-karty">
+          <article>
+            <h3>🏰 Państwo</h3>
+            <p><code>/panstwo zaloz &lt;nazwa&gt;</code> stawia serce państwa. Na start dostajesz 100 punktów i 48 h tarczy. Teren zajmujesz chunk po chunku.</p>
+          </article>
+          <article>
+            <h3>🤝 Sojusze</h3>
+            <p>Do 3 sojuszy naraz. Sojusznicy walczą w wojnie po twojej stronie i mają wspólny czat <code>/sz</code>.</p>
+          </article>
+          <article>
+            <h3>⚔️ Wojny</h3>
+            <p>W bitwie rozbijasz serce wroga (300 HP). Bronią go czempion, wieżyczki i fale mobów co 90 s. Zwycięzca bierze 25% punktów i 3 chunki.</p>
+          </article>
+          <article>
+            <h3>🕊️ Pokój albo wojna</h3>
+            <p>Państwo pokojowe jest nietykalne (75% przychodu). Agresywne zarabia 100% i może atakować — ale samo też jest celem.</p>
+          </article>
+          <article>
+            <h3>🗺️ Regiony</h3>
+            <p>Kto ma najwięcej terenu w regionie (Europa, Azja, Afryka…), ten go kontroluje i dostaje bonus do przychodu.</p>
+          </article>
+          <article>
+            <h3>📜 Questy i ulepszenia</h3>
+            <p>3 questy dziennie dla całego państwa. Za punkty kupujesz ulepszenia: więcej terenu i członków, większy przychód, mocniejsze serce.</p>
+          </article>
+          <article>
+            <h3>🛒 Rynek</h3>
+            <p><code>/rynek</code> — handel z graczami za szmaragdy, oferta wisi 48 h, podatek 5%.</p>
+          </article>
+          <article>
+            <h3>🏠 Domy i teleporty</h3>
+            <p><code>/dom</code>, <code>/tpa</code>, <code>/msg</code> i <code>/rtp</code> na wybrany kontynent. Z rangą masz więcej domów.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="mapa" class="e-mapa">
+      <div class="wrap">
+        <div class="sec-head">
+          <div>
+            <p class="kicker">Mapa na żywo</p>
+            <h2>Tak wygląda świat</h2>
+          </div>
+          <a class="btn btn-ghost" href="https://mapa.bettergame.pl" target="_blank" rel="noopener">Otwórz pełną mapę</a>
+        </div>
+        <div class="e-mapa-ramka">
+          <img src="img/earth-swiat.webp" alt="Mapa całej Ziemi na serwerze Earth SMP" width="2000" height="1000" loading="lazy">
+          <button class="btn btn-pink e-mapa-wlacz" data-wlacz-mape>Włącz interaktywną mapę</button>
+        </div>
+        <p class="e-mapa-opis">Po starcie na mapie zobaczysz granice wszystkich państw.</p>
+      </div>
+    </section>
+
+    <section class="join">
+      <div class="wrap join-grid">
+        <div>
+          <p class="kicker">W dniu startu</p>
+          <h2>Pięć kroków<br>i masz państwo</h2>
+        </div>
+        <div class="steps">
+          <div class="step"><span class="mono">1</span><p><b>Java:</b> <button class="inline-ip mono" data-kopiuj-ip>bettergame.pl</button> · <b>Bedrock:</b> <button class="inline-ip mono" data-kopiuj-ip="mc.bettergame.pl">mc.bettergame.pl</button>, port <code>19132</code>. W lobby wybierz Earth SMP.</p></div>
+          <div class="step"><span class="mono">2</span><p><code>/rtp europa</code> (albo inny kontynent) — lądujesz w losowym miejscu.</p></div>
+          <div class="step"><span class="mono">3</span><p><code>/panstwo zaloz &lt;nazwa&gt;</code> — stawiasz serce państwa.</p></div>
+          <div class="step"><span class="mono">4</span><p><code>/panstwo zajmij</code> — zajmujesz chunki wokół serca.</p></div>
+          <div class="step"><span class="mono">5</span><p><code>/panstwo zapros &lt;nick&gt;</code> — zbierasz ekipę i gadacie na <code>/pc</code>.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="shop-cta e-sklep">
+      <div class="wrap">
+        <p class="kicker">Przedsprzedaż</p>
+        <h2 class="td">Ranga gotowa<br><span class="td-pink">na start.</span></h2>
+        <p>Rangi VIP–BETTER i klucze do skrzynek kupisz już teraz. Wpadną same w chwili startu, a czas rangi liczy się od startu trybu. Z rangą masz więcej domów i ofert na rynku.</p>
+        <a class="btn btn-pink" href="sklep.html#earthsmp">Rangi Earth SMP</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-bottom">
+        <span>© <span data-rok>2026</span> BetterGame.pl</span>
+        <span>Serwer nie jest powiązany z Mojang AB ani Microsoft. Minecraft jest znakiem towarowym Mojang AB.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/wspolne.js?v=bf6"></script>
+  <script>
+    document.querySelector("[data-wlacz-mape]")?.addEventListener("click", (e) => {
+      const ramka = e.currentTarget.parentElement;
+      ramka.innerHTML = '<iframe src="https://mapa.bettergame.pl" title="Mapa Earth SMP (BlueMap)" loading="lazy" allowfullscreen></iframe>';
+    });
+  </script>
+</body>
+</html>

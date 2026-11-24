@@ -1,0 +1,63 @@
+/* Earth SMP - podstrona trybu */
+.e-hero {
+  padding: 72px 0 56px;
+  background:
+    linear-gradient(180deg, rgba(17, 9, 32, .55), var(--bg) 92%),
+    url("../img/earth-swiat.webp") center / cover no-repeat;
+  text-align: center;
+}
+.e-hero .lead { max-width: 640px; margin: 18px auto 0; color: var(--muted); font-size: 18px; }
+.e-green { color: var(--ok); }
+
+.e-licznik {
+  margin: 34px auto 0;
+  max-width: 560px;
+  padding: 22px 18px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: rgba(17, 9, 32, .78);
+}
+.e-licznik-tytul { margin: 0 0 14px; color: var(--muted); }
+.e-licznik-tytul b { color: var(--text); }
+.e-licznik-pola { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.e-licznik-pola div {
+  padding: 12px 4px;
+  border-radius: 10px;
+  background: var(--violet-deep);
+}
+.e-licznik-pola b { display: block; font-family: var(--f-mono); font-size: clamp(28px, 7vw, 44px); color: var(--ok); }
+.e-licznik-pola span { font-size: 13px; color: var(--muted); }
+.e-licznik-po { margin: 0; font-size: 18px; font-weight: 700; color: var(--ok); }
+
+.e-cta { margin-top: 26px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+.e-karty {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 16px;
+}
+.e-karty article {
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgba(59, 15, 92, .25);
+}
+.e-karty h3 { margin: 0 0 8px; font-size: 20px; }
+.e-karty p { margin: 0; color: var(--muted); line-height: 1.55; }
+.e-karty code { color: var(--cyan); }
+
+.e-mapa-ramka {
+  position: relative;
+  aspect-ratio: 2 / 1;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  background: #0a0614;
+}
+.e-mapa-ramka img, .e-mapa-ramka iframe { display: block; width: 100%; height: 100%; border: 0; object-fit: cover; }
+.e-mapa-wlacz { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
+.e-mapa-opis { color: var(--muted); margin-top: 10px; }
+@media (max-width: 640px) { .e-mapa-ramka { aspect-ratio: 4 / 3; } }
+
+.e-sklep { text-align: center; }
+.e-sklep p { max-width: 620px; margin: 14px auto 22px; color: var(--muted); }

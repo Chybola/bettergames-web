@@ -42,6 +42,37 @@ function pasekPromocji() {
 }
 pasekPromocji();
 
+// Odliczanie do startu (Earth SMP): [data-odliczanie="ISO"] z polami [data-d] [data-h] [data-m] [data-s]
+// albo [data-odliczanie-tekst="ISO"] - krótki tekst "za 16 d 05:12:33". Po czasie pokazuje [hidden] .e-licznik-po.
+function odliczania() {
+  const pola = [...document.querySelectorAll("[data-odliczanie], [data-odliczanie-tekst]")];
+  if (!pola.length) return;
+  const dwa = (n) => String(n).padStart(2, "0");
+  const tik = () => {
+    for (const el of pola) {
+      const ms = Date.parse(el.dataset.odliczanie || el.dataset.odliczanieTekst) - Date.now();
+      const d = Math.floor(ms / 86400000), h = Math.floor(ms / 3600000) % 24, m = Math.floor(ms / 60000) % 60, s = Math.floor(ms / 1000) % 60;
+      if (el.dataset.odliczanieTekst !== undefined) {
+        el.textContent = ms <= 0 ? "już działa!" : `za ${d > 0 ? d + " d " : ""}${dwa(h)}:${dwa(m)}:${dwa(s)}`;
+        continue;
+      }
+      if (ms <= 0) {
+        el.querySelector(".e-licznik-pola")?.setAttribute("hidden", "");
+        el.querySelector(".e-licznik-tytul")?.setAttribute("hidden", "");
+        el.querySelector(".e-licznik-po")?.removeAttribute("hidden");
+        continue;
+      }
+      for (const [k, v] of [["d", d], ["h", h], ["m", m], ["s", s]]) {
+        const p = el.querySelector(`[data-${k}]`);
+        if (p) p.textContent = k === "d" ? v : dwa(v);
+      }
+    }
+  };
+  tik();
+  setInterval(tik, 1000);
+}
+odliczania();
+
 function wczytajKoszyk() {
   try {
     const dane = JSON.parse(localStorage.getItem(KLUCZ_KOSZYKA) || "[]");
