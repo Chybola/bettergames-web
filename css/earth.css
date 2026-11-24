@@ -2,7 +2,7 @@
 .e-hero {
   padding: 72px 0 56px;
   background:
-    linear-gradient(180deg, rgba(17, 9, 32, .55), var(--bg) 92%),
+    linear-gradient(180deg, rgba(17, 9, 32, .25), rgba(17, 9, 32, .7) 60%, var(--bg) 98%),
     url("../img/earth-swiat.webp") center / cover no-repeat;
   text-align: center;
 }

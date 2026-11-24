@@ -458,3 +458,5 @@ section { padding: 96px 0; }
   .promo-top-tekst { display: none; }
   .promo-top .wrap { gap: 10px; }
 }
+
+.nav-links a { white-space: nowrap; }
