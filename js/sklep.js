@@ -47,15 +47,16 @@ function kartaProduktu(p) {
       ${lista}
       <div class="product-foot">
         <div class="price">${promo}<strong>${zl(p.cena)}</strong>${okres ? `<small>${okres}</small>` : ""}</div>
-        <button class="add" data-dodaj="${p.id}">Do koszyka</button>
+        <button class="add" data-dodaj="${p.id}">${tryb(p.tryb)?.przedsprzedaz ? "Zamów przedpremierowo" : "Do koszyka"}</button>
       </div>
+      ${tryb(p.tryb)?.przedsprzedaz ? `<p class="preorder-tag">📦 Przedsprzedaż - wydamy w dniu startu ${esc(tryb(p.tryb).nazwa)}</p>` : ""}
       ${omnibus}
     </article>`;
 }
 
 function renderujTryby() {
   document.getElementById("tryby").innerHTML = `<span>Tryb</span>` + TRYBY.map((t) => `
-    <button role="tab" class="mode-card" data-tryb="${t.id}" aria-selected="${t.id === wybranyTryb}">${esc(t.nazwa)}</button>`).join("") + `
+    <button role="tab" class="mode-card" data-tryb="${t.id}" aria-selected="${t.id === wybranyTryb}">${esc(t.nazwa)}${t.przedsprzedaz ? ` <span class="mode-pre">przedsprzedaż</span>` : ""}</button>`).join("") + `
     <span class="mode-card is-soon" aria-hidden="true">kolejne wkrótce</span>`;
 }
 
@@ -71,7 +72,9 @@ function renderujProdukty() {
   const wTrybie = PRODUKTY.filter((p) => p.tryb === wybranyTryb);
   const kategorie = Object.keys(KATEGORIE).filter((k) =>
     (wybranaKategoria === "wszystko" || k === wybranaKategoria) && wTrybie.some((p) => p.kategoria === k));
-  document.getElementById("produkty").innerHTML = kategorie.map((k) => `
+  const t = tryb(wybranyTryb);
+  const przed = t?.przedsprzedaz ? `<div class="preorder-note"><strong>📦 ${esc(t.nazwa)} - przedsprzedaż</strong><p>${esc(t.przedsprzedaz)}</p></div>` : "";
+  document.getElementById("produkty").innerHTML = przed + kategorie.map((k) => `
     <section class="cat" id="kat-${k}">
       <div class="cat-head">
         <h2>${KATEGORIE[k]}</h2>

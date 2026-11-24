@@ -393,3 +393,19 @@ body.drawer-open { overflow: hidden; }
   background: var(--pink); color: #fff; border: 0; border-radius: 99px; padding: 11px 20px; cursor: pointer; box-shadow: 0 8px 24px rgba(0, 0, 0, .35); }
 .czat-wroc[hidden] { display: none; }
 
+
+/* ---------- przedsprzedaż (tryb z przedsprzedaz w js/produkty.js) ---------- */
+.preorder-note {
+  margin: 8px 0 28px;
+  padding: 16px 18px;
+  border: 1px solid rgba(255, 65, 108, .45);
+  border-radius: 12px;
+  background: linear-gradient(90deg, rgba(255, 65, 108, .14), rgba(168, 85, 247, .10));
+}
+.preorder-note strong { font-size: 17px; color: #fff; }
+.preorder-note p { margin: 6px 0 0; color: var(--text); }
+.preorder-tag { font-size: 12px; color: #ffb3c4; margin: 10px 0 0; }
+.mode-pre {
+  font-size: 10px; text-transform: uppercase; letter-spacing: .06em; font-weight: 800;
+  color: #ff416c; background: rgba(255, 65, 108, .15); border-radius: 6px; padding: 2px 6px; margin-left: 4px;
+}

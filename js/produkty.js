@@ -5,6 +5,11 @@
 
 const TRYBY = [
   { id: "genblock", nazwa: "GenBlock", opis: "Generatory, ulepszenia, rankingi", kolor: "#ff2fb0" },
+  // przedsprzedaz: zakupy czekają w kolejce wydań (serwer "boxpvp") i wpadają w dniu startu trybu
+  {
+    id: "boxpvp", nazwa: "BoxPvP", opis: "Boksy z rudami, PvP, strefy rang", kolor: "#ff416c",
+    przedsprzedaz: "Przedsprzedaż - BoxPvP startuje wkrótce. Zakupy wydamy automatycznie w dniu startu, a rangi będą liczone od startu trybu.",
+  },
 ];
 
 const KATEGORIE = { rangi: "Rangi", zestawy: "Zestawy", klucze: "Klucze", kosmetyki: "Kosmetyki", wsparcie: "Wsparcie" };
@@ -120,6 +125,46 @@ const PRODUKTY = [
     kolor: "#ff2fb0",
     opis: "Klucz do legendarnej skrzynki na GenBlocku.",
   },
+
+  /* ---------- BoxPvP (przedsprzedaż) ---------- */
+  {
+    id: "box-vip", tryb: "boxpvp", kategoria: "rangi", nazwa: "VIP", okres: "30 dni", cena: 1000, kolor: "#33e4f2",
+    opis: "Ranga na start na BoxPvP.",
+    zawiera: ["ranga VIP na BoxPvP", "dostęp do Strefy VIP (/vip) - boksy bez PvP co 3 min", "rola VIP na Discordzie"],
+  },
+  {
+    id: "box-svip", tryb: "boxpvp", kategoria: "rangi", nazwa: "SVIP", okres: "30 dni", cena: 2000, kolor: "#c18bff",
+    opis: "Wszystko z VIP-a i trochę więcej.",
+    zawiera: ["wszystko z rangi VIP", "ranga SVIP na BoxPvP", "rola SVIP na Discordzie"],
+  },
+  {
+    id: "box-sponsor", tryb: "boxpvp", kategoria: "rangi", nazwa: "SPONSOR", okres: "30 dni", cena: 3000, kolor: "#f4c04a",
+    opis: "Dostęp do najlepszej strefy bez PvP.",
+    zawiera: ["wszystko z rangi SVIP", "dostęp do Strefy Sponsor (/sponsor) - diamenty i szmaragdy co 2 min", "rola Sponsor na Discordzie"],
+  },
+  {
+    id: "box-elita", tryb: "boxpvp", kategoria: "rangi", nazwa: "ELITA", okres: "30 dni", cena: 5000, kolor: "#ff6fae",
+    opis: "Ranga dla stałych bywalców BoxPvP.",
+    zawiera: ["wszystko z rangi SPONSOR", "ranga ELITA na BoxPvP", "rola Elita na Discordzie"],
+  },
+  {
+    id: "box-better", tryb: "boxpvp", kategoria: "rangi", nazwa: "BETTER", okres: "30 dni", cena: 10000, kolor: "#ff2fb0",
+    wyroznienie: "najwyższa ranga",
+    opis: "Najwyższa ranga na BoxPvP.",
+    zawiera: ["wszystko z rangi ELITA", "ranga BETTER na BoxPvP", "rola Better na Discordzie"],
+  },
+  {
+    id: "box-klucz-rzadki", tryb: "boxpvp", kategoria: "klucze", nazwa: "Klucz Rzadki", okres: "1 szt.", cena: 199, kolor: "#33e4f2",
+    opis: "Klucz do rzadkiej skrzynki na BoxPvP.",
+  },
+  {
+    id: "box-klucz-epicki", tryb: "boxpvp", kategoria: "klucze", nazwa: "Klucz Epicki", okres: "1 szt.", cena: 499, kolor: "#c18bff",
+    opis: "Klucz do epickiej skrzynki na BoxPvP.",
+  },
+  {
+    id: "box-klucz-legendarny", tryb: "boxpvp", kategoria: "klucze", nazwa: "Klucz Legendarny", okres: "1 szt.", cena: 999, kolor: "#ff2fb0",
+    opis: "Klucz do legendarnej skrzynki na BoxPvP.",
+  },
 ];
 
 // Promocja czasowa (nazwa, procent, termin: PROMOCJA_BAZA w js/wspolne.js): wszystkie ceny -procent.
@@ -145,6 +190,12 @@ if (PROMOCJA.aktywna) {
 
 // Tabela porównania rang w trybie. "od" = cecha od tej rangi w górę, "wartosci" = osobny tekst dla każdej rangi.
 const POROWNANIE = {
+  boxpvp: [
+    { cecha: "Ranga na BoxPvP", wartosci: { "box-vip": "VIP", "box-svip": "SVIP", "box-sponsor": "SPONSOR", "box-elita": "ELITA", "box-better": "BETTER" } },
+    { cecha: "Strefa VIP (/vip) bez PvP", od: "box-vip" },
+    { cecha: "Strefa Sponsor (/sponsor) bez PvP", od: "box-sponsor" },
+    { cecha: "Rola na Discordzie", wartosci: { "box-vip": "VIP", "box-svip": "SVIP", "box-sponsor": "Sponsor", "box-elita": "Elita", "box-better": "Better" } },
+  ],
   genblock: [
     { cecha: "Prefiks na czacie i tabie", wartosci: { "gen-vip": "[VIP]", "gen-svip": "[SVIP]", "gen-sponsor": "[SPONSOR]", "gen-elita": "[ELITA]", "gen-better": "[BETTER]" } },
     { cecha: "Kolorowy nick", od: "gen-vip" },
