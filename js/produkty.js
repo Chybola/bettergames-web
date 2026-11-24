@@ -5,10 +5,10 @@
 
 const TRYBY = [
   { id: "genblock", nazwa: "GenBlock", opis: "Generatory, ulepszenia, rankingi", kolor: "#ff2fb0" },
-  // przedsprzedaz: zakupy czekają w kolejce wydań (serwer "boxpvp") i wpadają w dniu startu trybu
+  // przedsprzedaz: zakupy czekają w kolejce wydań (serwer "earthsmp") i wpadają w dniu startu trybu
   {
-    id: "boxpvp", nazwa: "BoxPvP", opis: "Boksy z rudami, PvP, strefy rang", kolor: "#ff416c",
-    przedsprzedaz: "Przedsprzedaż - BoxPvP startuje wkrótce. Zakupy wydamy automatycznie w dniu startu, a rangi będą liczone od startu trybu.",
+    id: "earthsmp", nazwa: "Earth SMP", opis: "Mapa Ziemi, państwa, wojny", kolor: "#34d399",
+    przedsprzedaz: "Przedsprzedaż - Earth SMP startuje wkrótce. Zakupy wydamy automatycznie w dniu startu, a rangi będą liczone od startu trybu.",
   },
 ];
 
@@ -126,44 +126,44 @@ const PRODUKTY = [
     opis: "Klucz do legendarnej skrzynki na GenBlocku.",
   },
 
-  /* ---------- BoxPvP (przedsprzedaż) ---------- */
+  /* ---------- Earth SMP (przedsprzedaż) ---------- */
   {
-    id: "box-vip", tryb: "boxpvp", kategoria: "rangi", nazwa: "VIP", okres: "30 dni", cena: 1000, kolor: "#33e4f2",
-    opis: "Ranga na start na BoxPvP.",
-    zawiera: ["ranga VIP na BoxPvP", "dostęp do Strefy VIP (/vip) - boksy bez PvP co 3 min", "rola VIP na Discordzie"],
+    id: "earth-vip", tryb: "earthsmp", kategoria: "rangi", nazwa: "VIP", okres: "30 dni", cena: 1000, kolor: "#33e4f2",
+    opis: "Ranga na start na Earth SMP.",
+    zawiera: ["ranga VIP na Earth SMP", "2 domy (/dom)", "8 ofert na rynku (/rynek)", "rola VIP na Discordzie"],
   },
   {
-    id: "box-svip", tryb: "boxpvp", kategoria: "rangi", nazwa: "SVIP", okres: "30 dni", cena: 2000, kolor: "#c18bff",
+    id: "earth-svip", tryb: "earthsmp", kategoria: "rangi", nazwa: "SVIP", okres: "30 dni", cena: 2000, kolor: "#c18bff",
     opis: "Wszystko z VIP-a i trochę więcej.",
-    zawiera: ["wszystko z rangi VIP", "ranga SVIP na BoxPvP", "rola SVIP na Discordzie"],
+    zawiera: ["ranga SVIP na Earth SMP", "3 domy (/dom)", "10 ofert na rynku (/rynek)", "wszystko z rangi VIP", "rola SVIP na Discordzie"],
   },
   {
-    id: "box-sponsor", tryb: "boxpvp", kategoria: "rangi", nazwa: "SPONSOR", okres: "30 dni", cena: 3000, kolor: "#f4c04a",
-    opis: "Dostęp do najlepszej strefy bez PvP.",
-    zawiera: ["wszystko z rangi SVIP", "dostęp do Strefy Sponsor (/sponsor) - diamenty i szmaragdy co 2 min", "rola Sponsor na Discordzie"],
+    id: "earth-sponsor", tryb: "earthsmp", kategoria: "rangi", nazwa: "SPONSOR", okres: "30 dni", cena: 3000, kolor: "#f4c04a",
+    opis: "Dla tych, którzy chcą mocniej wesprzeć serwer.",
+    zawiera: ["ranga SPONSOR na Earth SMP", "4 domy (/dom)", "12 ofert na rynku (/rynek)", "wszystko z rangi SVIP", "rola Sponsor na Discordzie"],
   },
   {
-    id: "box-elita", tryb: "boxpvp", kategoria: "rangi", nazwa: "ELITA", okres: "30 dni", cena: 5000, kolor: "#ff6fae",
-    opis: "Ranga dla stałych bywalców BoxPvP.",
-    zawiera: ["wszystko z rangi SPONSOR", "ranga ELITA na BoxPvP", "rola Elita na Discordzie"],
+    id: "earth-elita", tryb: "earthsmp", kategoria: "rangi", nazwa: "ELITA", okres: "30 dni", cena: 5000, kolor: "#ff6fae",
+    opis: "Ranga dla stałych bywalców Earth SMP.",
+    zawiera: ["ranga ELITA na Earth SMP", "5 domów (/dom)", "15 ofert na rynku (/rynek)", "wszystko z rangi SPONSOR", "rola Elita na Discordzie"],
   },
   {
-    id: "box-better", tryb: "boxpvp", kategoria: "rangi", nazwa: "BETTER", okres: "30 dni", cena: 10000, kolor: "#ff2fb0",
+    id: "earth-better", tryb: "earthsmp", kategoria: "rangi", nazwa: "BETTER", okres: "30 dni", cena: 10000, kolor: "#ff2fb0",
     wyroznienie: "najwyższa ranga",
-    opis: "Najwyższa ranga na BoxPvP.",
-    zawiera: ["wszystko z rangi ELITA", "ranga BETTER na BoxPvP", "rola Better na Discordzie"],
+    opis: "Najwyższa ranga na Earth SMP.",
+    zawiera: ["ranga BETTER na Earth SMP", "6 domów (/dom)", "20 ofert na rynku (/rynek)", "wszystko z rangi ELITA", "rola Better na Discordzie"],
   },
   {
-    id: "box-klucz-rzadki", tryb: "boxpvp", kategoria: "klucze", nazwa: "Klucz Rzadki", okres: "1 szt.", cena: 199, kolor: "#33e4f2",
-    opis: "Klucz do rzadkiej skrzynki na BoxPvP.",
+    id: "earth-klucz-rzadki", tryb: "earthsmp", kategoria: "klucze", nazwa: "Klucz Rzadki", okres: "1 szt.", cena: 199, kolor: "#33e4f2",
+    opis: "Klucz do rzadkiej skrzynki na Earth SMP.",
   },
   {
-    id: "box-klucz-epicki", tryb: "boxpvp", kategoria: "klucze", nazwa: "Klucz Epicki", okres: "1 szt.", cena: 499, kolor: "#c18bff",
-    opis: "Klucz do epickiej skrzynki na BoxPvP.",
+    id: "earth-klucz-epicki", tryb: "earthsmp", kategoria: "klucze", nazwa: "Klucz Epicki", okres: "1 szt.", cena: 499, kolor: "#c18bff",
+    opis: "Klucz do epickiej skrzynki na Earth SMP.",
   },
   {
-    id: "box-klucz-legendarny", tryb: "boxpvp", kategoria: "klucze", nazwa: "Klucz Legendarny", okres: "1 szt.", cena: 999, kolor: "#ff2fb0",
-    opis: "Klucz do legendarnej skrzynki na BoxPvP.",
+    id: "earth-klucz-legendarny", tryb: "earthsmp", kategoria: "klucze", nazwa: "Klucz Legendarny", okres: "1 szt.", cena: 999, kolor: "#ff2fb0",
+    opis: "Klucz do legendarnej skrzynki na Earth SMP.",
   },
 ];
 
@@ -190,11 +190,11 @@ if (PROMOCJA.aktywna) {
 
 // Tabela porównania rang w trybie. "od" = cecha od tej rangi w górę, "wartosci" = osobny tekst dla każdej rangi.
 const POROWNANIE = {
-  boxpvp: [
-    { cecha: "Ranga na BoxPvP", wartosci: { "box-vip": "VIP", "box-svip": "SVIP", "box-sponsor": "SPONSOR", "box-elita": "ELITA", "box-better": "BETTER" } },
-    { cecha: "Strefa VIP (/vip) bez PvP", od: "box-vip" },
-    { cecha: "Strefa Sponsor (/sponsor) bez PvP", od: "box-sponsor" },
-    { cecha: "Rola na Discordzie", wartosci: { "box-vip": "VIP", "box-svip": "SVIP", "box-sponsor": "Sponsor", "box-elita": "Elita", "box-better": "Better" } },
+  earthsmp: [
+    { cecha: "Ranga na Earth SMP", wartosci: { "earth-vip": "VIP", "earth-svip": "SVIP", "earth-sponsor": "SPONSOR", "earth-elita": "ELITA", "earth-better": "BETTER" } },
+    { cecha: "Domy (/dom)", wartosci: { "earth-vip": "2", "earth-svip": "3", "earth-sponsor": "4", "earth-elita": "5", "earth-better": "6" } },
+    { cecha: "Oferty na rynku (/rynek)", wartosci: { "earth-vip": "8", "earth-svip": "10", "earth-sponsor": "12", "earth-elita": "15", "earth-better": "20" } },
+    { cecha: "Rola na Discordzie", wartosci: { "earth-vip": "VIP", "earth-svip": "SVIP", "earth-sponsor": "Sponsor", "earth-elita": "Elita", "earth-better": "Better" } },
   ],
   genblock: [
     { cecha: "Prefiks na czacie i tabie", wartosci: { "gen-vip": "[VIP]", "gen-svip": "[SVIP]", "gen-sponsor": "[SPONSOR]", "gen-elita": "[ELITA]", "gen-better": "[BETTER]" } },
