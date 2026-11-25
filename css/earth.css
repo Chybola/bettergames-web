@@ -71,3 +71,8 @@
 .e-ranking tbody tr:last-child td { border-bottom: 0; }
 .e-ranking-pusto { text-align: center !important; color: var(--muted); font-family: var(--f-body) !important; padding: 28px !important; }
 .e-ranking-razem { color: var(--muted); }
+
+#mapa-earth.leaflet-container { background: #1b2f57; font-family: var(--f-body); }
+.e-mapa-plakat { width: 100%; height: 100%; object-fit: cover; }
+.e-mapa-wsp { padding: 4px 10px; border-radius: 8px; background: rgba(17, 9, 32, .85); color: var(--text); font: 600 13px var(--f-mono); }
+#mapa-earth .leaflet-control-zoom a { background: var(--bg-2, #1b1030); color: var(--text); border-color: var(--line); }

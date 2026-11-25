@@ -16,7 +16,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css?v=bf6">
   <link rel="stylesheet" href="css/strona-glowna.css">
-  <link rel="stylesheet" href="css/earth.css?v=3">
+  <link rel="stylesheet" href="css/earth.css?v=4">
 </head>
 <body>
 
@@ -140,13 +140,12 @@
             <p class="kicker">Mapa na żywo</p>
             <h2>Tak wygląda świat</h2>
           </div>
-          <a class="btn btn-ghost" href="https://mapa.bettergame.pl" target="_blank" rel="noopener">Otwórz pełną mapę</a>
+          <a class="btn btn-ghost" href="https://mapa.bettergame.pl" target="_blank" rel="noopener">Pełna mapa 3D</a>
         </div>
-        <div class="e-mapa-ramka">
-          <img src="img/earth-swiat.webp" alt="Mapa całej Ziemi na serwerze Earth SMP" width="2000" height="1000" loading="lazy">
-          <button class="btn btn-pink e-mapa-wlacz" data-wlacz-mape>Włącz interaktywną mapę</button>
+        <div class="e-mapa-ramka" id="mapa-earth">
+          <img class="e-mapa-plakat" src="img/earth-swiat.webp" alt="Mapa całej Ziemi na serwerze Earth SMP" width="2000" height="1000" loading="lazy">
         </div>
-        <p class="e-mapa-opis">Po starcie na mapie zobaczysz granice wszystkich państw.</p>
+        <p class="e-mapa-opis">Przeciągaj i przybliżaj - mapa zapętla się w każdą stronę, tak jak w grze: za Pacyfikiem wracasz do Azji, a za biegunem wychodzisz z drugiej strony. Po starcie zobaczysz tu granice wszystkich państw.</p>
       </div>
     </section>
 
@@ -186,6 +185,7 @@
   </footer>
 
   <script src="js/wspolne.js?v=bf7"></script>
+  <script src="js/mapa-earth.js?v=2" defer></script>
   <script>
     (async function ranking() {
       const tb = document.querySelector("[data-ranking]");
@@ -208,10 +208,6 @@
       }
       setTimeout(ranking, 60000);
     })();
-    document.querySelector("[data-wlacz-mape]")?.addEventListener("click", (e) => {
-      const ramka = e.currentTarget.parentElement;
-      ramka.innerHTML = '<iframe src="https://mapa.bettergame.pl" title="Mapa Earth SMP (BlueMap)" loading="lazy" allowfullscreen></iframe>';
-    });
-  </script>
+</script>
 </body>
 </html>
