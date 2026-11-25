@@ -167,22 +167,30 @@ const PRODUKTY = [
   },
 ];
 
-// Promocja czasowa (nazwa, procent, termin: PROMOCJA_BAZA w js/wspolne.js): wszystkie ceny -procent.
-// Prawdziwą cenę zamówienia liczy sklep-panel/produkty.php - tam ten sam procent i termin.
-// najnizsza30 = najniższa cena z 30 dni przed obniżką (dyrektywa Omnibus), w groszach.
-const PROMOCJA = {
-  ...PROMOCJA_BAZA,
-  najnizsza30: {
-    "gen-vip": 999, "gen-svip": 1999, "gen-sponsor": 2999, "gen-elita": 3999, "gen-better": 4999,
-    "gen-zestaw-better-plus": 7499, "gen-zestaw-better": 6499,
-    "gen-klucz-zwykly": 199, "gen-klucz-epicki": 499, "gen-klucz-legendarny": 999,
-  },
+// Promocja czasowa (PROMOCJE w js/wspolne.js): w czasie promocji wszystkie ceny -procent.
+// Prawdziwą cenę zamówienia liczy sklep-panel/produkty.php - tam te same procenty i terminy.
+// najnizsza30 = najniższa cena z 30 dni przed obniżką (dyrektywa Omnibus), w groszach: cena bazowa albo cena
+// z wcześniejszej promocji, która trwała w tych 30 dniach. Przed Black Friday ceny były inne - stąd osobna lista.
+const PRZED_BF = {
+  "gen-vip": 999, "gen-svip": 1999, "gen-sponsor": 2999, "gen-elita": 3999, "gen-better": 4999,
+  "gen-zestaw-better-plus": 7499, "gen-zestaw-better": 6499,
+  "gen-klucz-zwykly": 199, "gen-klucz-epicki": 499, "gen-klucz-legendarny": 999,
 };
-PROMOCJA.aktywna = promocjaAktywna();
+function najnizsza30(p, akt) {
+  if (akt.nazwa === "BLACK FRIDAY") return PRZED_BF[p.id] ?? p.cena;
+  const okno = Date.parse(akt.od) - 30 * 86400000;
+  let min = p.cena;
+  for (const x of PROMOCJE) {
+    if (x === akt || Date.parse(x.do) <= okno || Date.parse(x.od) >= Date.parse(akt.od)) continue;
+    min = Math.min(min, Math.floor((p.cena * (100 - x.procent)) / 100));
+  }
+  return min;
+}
+const PROMOCJA = { ...(PROMOCJA_BAZA || {}), aktywna: promocjaAktywna() };
 if (PROMOCJA.aktywna) {
   for (const p of PRODUKTY) {
     p.cenaPrzed = p.cena;
-    p.najnizsza30 = PROMOCJA.najnizsza30[p.id] ?? p.cena;
+    p.najnizsza30 = najnizsza30(p, PROMOCJA_BAZA);
     p.cena = Math.floor((p.cena * (100 - PROMOCJA.procent)) / 100);
     p.wyroznienie = `${PROMOCJA.nazwa} -${PROMOCJA.procent}%`;
   }

@@ -3,16 +3,16 @@
 const ADRES_SERWERA = "bettergame.pl";
 const KLUCZ_KOSZYKA = "bg_koszyk";
 
-// Promocja czasowa - pasek na górze każdej podstrony i ceny w sklepie (js/produkty.js).
-// Ten sam procent i termin MUSZĄ być w sklep-panel/produkty.php. Po "do" wszystko znika samo.
-const PROMOCJA_BAZA = {
-  nazwa: "BLACK FRIDAY",
-  procent: 50,
-  od: "2026-11-23T00:00:00+01:00",
-  do: "2026-12-01T00:00:00+01:00",
-  koniecTekst: "30.11, 23:59",
-};
-const promocjaAktywna = () => Date.now() >= Date.parse(PROMOCJA_BAZA.od) && Date.now() < Date.parse(PROMOCJA_BAZA.do);
+// Promocje czasowe - pasek na górze każdej podstrony i ceny w sklepie (js/produkty.js).
+// Te same procenty i terminy MUSZĄ być w sklep-panel/produkty.php. Każda działa w oknie [od, do), potem znika sama.
+const PROMOCJE = [
+  { nazwa: "BLACK FRIDAY", emoji: "⚡", procent: 50, od: "2026-11-23T00:00:00+01:00", do: "2026-12-01T00:00:00+01:00", koniecTekst: "30.11, 23:59" },
+  { nazwa: "MIKOŁAJKI", emoji: "🎅", procent: 30, od: "2026-12-06T00:00:00+01:00", do: "2026-12-07T00:00:00+01:00", koniecTekst: "6.12, 23:59" },
+  { nazwa: "ŚWIĘTA", emoji: "🎄", procent: 25, od: "2026-12-20T00:00:00+01:00", do: "2026-12-27T00:00:00+01:00", koniecTekst: "26.12, 23:59" },
+];
+const promocjaTeraz = () => PROMOCJE.find((p) => Date.now() >= Date.parse(p.od) && Date.now() < Date.parse(p.do)) || null;
+const PROMOCJA_BAZA = promocjaTeraz();
+const promocjaAktywna = () => Boolean(PROMOCJA_BAZA) && Date.now() < Date.parse(PROMOCJA_BAZA.do);
 
 function pasekPromocji() {
   if (!promocjaAktywna()) return;
@@ -21,7 +21,7 @@ function pasekPromocji() {
   pasek.className = "promo-top";
   pasek.href = "sklep.html";
   pasek.innerHTML = `<span class="wrap">
-      <strong>${p.nazwa} <em>-${p.procent}%</em></strong>
+      <strong>${p.emoji || ""} ${p.nazwa} <em>-${p.procent}%</em></strong>
       <span class="promo-top-tekst">na wszystko w sklepie — tylko do ${p.koniecTekst}</span>
       <b class="promo-top-licznik"></b>
       <span class="promo-top-cta">Do sklepu →</span>
