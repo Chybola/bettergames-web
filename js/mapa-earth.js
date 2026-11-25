@@ -1,5 +1,5 @@
-// Mapa Earth SMP na stronie: 2D z kafelków BlueMap (mapa.bettergame.pl), zapętlona w każdą stronę jak w grze
-// (wschód <-> zachód i północ <-> południe). Granice państw z markerów BlueMap (zestaw "earthnations").
+// Mapa Earth SMP na stronie: 2D z kafelków BlueMap (mapa.bettergame.pl), powtarza się w lewo i w prawo
+// (wschód <-> zachód, jak kula ziemska); góra i dół mają koniec mapy. Granice państw z markerów BlueMap (zestaw "earthnations").
 // Kafelki lowres BlueMap: lod1 = 500 kratek, lod2 = 2500; obraz 501x1002, kolor w górnej połowie.
 (function () {
   const BAZA = "https://mapa.bettergame.pl/maps/earth";
@@ -12,7 +12,6 @@
   ];
   const mod = (a, n) => ((a % n) + n) % n;
   const zawinX = (x) => mod(x - MINX, SZER) + MINX;
-  const zawinZ = (z) => mod(z - MINZ, WYS) + MINZ;
 
   const obrazy = new Map();
   function obraz(lod, x, z) {
@@ -47,9 +46,10 @@
           for (let Z = Math.floor(bz0 / T); Z <= Math.floor((bz0 + S - 1) / T); Z++) {
             const x0 = Math.max(bx0, X * T), x1 = Math.min(bx0 + S, (X + 1) * T);
             const z0 = Math.max(bz0, Z * T), z1 = Math.min(bz0 + S, (Z + 1) * T);
-            // kafelek BlueMap po drugiej stronie szwu (mapa zapętlona jak w grze)
-            const Xw = mod(X + ox, nx) - ox, Zw = mod(Z + oz, nz) - oz;
-            zadania.push(obraz(L0.lod, Xw, Zw).then((im) => {
+            // lewo-prawo: kafelek BlueMap po drugiej stronie szwu; góra-dół: poza mapą nic nie ma
+            if (Z < -oz || Z >= nz - oz) continue;
+            const Xw = mod(X + ox, nx) - ox;
+            zadania.push(obraz(L0.lod, Xw, Z).then((im) => {
               if (!im) return;
               ctx.drawImage(im, (x0 - X * T) * srcPx, (z0 - Z * T) * srcPx, (x1 - x0) * srcPx, (z1 - z0) * srcPx,
                 (x0 - bx0) * dstPx, (z0 - bz0) * dstPx, (x1 - x0) * dstPx, (z1 - z0) * dstPx);
@@ -80,13 +80,11 @@
       for (const m of Object.values(zestaw.markers || {})) {
         if (!Array.isArray(m.shape) || m.shape.length < 3) continue;
         const f = hex(m.fillColor, { kolor: "#34d399", alfa: 0.3 }), l = hex(m.lineColor, { kolor: "#34d399", alfa: 1 });
-        // 3x3 kopie wokół środka - przy przesuwaniu widok i tak wraca do środkowej kopii (moveend w start)
+        // kopie po lewej i prawej - przy przesuwaniu widok i tak wraca do środkowej kopii (moveend w start)
         for (const dx of [-SZER, 0, SZER]) {
-          for (const dz of [-WYS, 0, WYS]) {
-            L.polygon(m.shape.map((p) => [p.z + dz, p.x + dx]), {
-              color: l.kolor, opacity: l.alfa, weight: m.lineWidth || 2, fillColor: f.kolor, fillOpacity: f.alfa,
-            }).bindTooltip(m.label || "", { sticky: true }).addTo(warstwa);
-          }
+          L.polygon(m.shape.map((p) => [p.z, p.x + dx]), {
+            color: l.kolor, opacity: l.alfa, weight: m.lineWidth || 2, fillColor: f.kolor, fillOpacity: f.alfa,
+          }).bindTooltip(m.label || "", { sticky: true }).addTo(warstwa);
         }
       }
     }
@@ -97,6 +95,8 @@
     const mapa = L.map(el, {
       crs, minZoom: -2, maxZoom: 5, zoomSnap: 1, attributionControl: false, worldCopyJump: false,
       center: [-2900, 1170], zoom: -1,
+      // w pionie nie da się wyjechać poza mapę (w poziomie bez końca)
+      maxBounds: [[MINZ - 300, -1e9], [MINZ + WYS + 300, 1e9]], maxBoundsViscosity: 1,
     });
     warstwaKafelkow().addTo(mapa);
     const panstwa = L.layerGroup().addTo(mapa);
@@ -106,8 +106,8 @@
     // po przejechaniu przez szew widok wraca do środkowej kopii mapy (płynnie, bez skoku obrazu)
     mapa.on("moveend", () => {
       const c = mapa.getCenter();
-      const x = zawinX(c.lng), z = zawinZ(c.lat);
-      if (x !== c.lng || z !== c.lat) mapa.setView([z, x], mapa.getZoom(), { animate: false });
+      const x = zawinX(c.lng);
+      if (x !== c.lng) mapa.setView([c.lat, x], mapa.getZoom(), { animate: false });
     });
 
     const info = L.control({ position: "bottomleft" });
@@ -115,7 +115,7 @@
       const d = L.DomUtil.create("div", "e-mapa-wsp");
       d.textContent = "x: — z: —";
       mapa.on("mousemove", (e) => {
-        d.textContent = `x: ${Math.round(zawinX(e.latlng.lng))}  z: ${Math.round(zawinZ(e.latlng.lat))}`;
+        d.textContent = `x: ${Math.round(zawinX(e.latlng.lng))}  z: ${Math.round(e.latlng.lat)}`;
       });
       return d;
     };
