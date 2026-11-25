@@ -14,6 +14,10 @@
   ],
   "rewrites": [
     {
+      "source": "/api/earth/ranking",
+      "destination": "https://panel.bettergame.pl/sklep/earth/ranking.php"
+    },
+    {
       "source": "/sklep/panel/",
       "destination": "https://panel.bettergame.pl/sklep/panel/"
     },

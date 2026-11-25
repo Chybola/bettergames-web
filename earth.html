@@ -16,7 +16,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css?v=bf6">
   <link rel="stylesheet" href="css/strona-glowna.css">
-  <link rel="stylesheet" href="css/earth.css?v=2">
+  <link rel="stylesheet" href="css/earth.css?v=3">
 </head>
 <body>
 
@@ -115,6 +115,24 @@
       </div>
     </section>
 
+    <section id="ranking" class="e-ranking">
+      <div class="wrap">
+        <div class="sec-head">
+          <div>
+            <p class="kicker">Na żywo</p>
+            <h2>Ranking państw</h2>
+          </div>
+          <p class="e-ranking-razem" data-ranking-razem>Odświeża się co minutę.</p>
+        </div>
+        <div class="e-ranking-tabela">
+          <table>
+            <thead><tr><th>#</th><th>Państwo</th><th>Punkty</th><th>Teren</th><th>Członkowie</th><th>Wygrane wojny</th><th>Regiony</th></tr></thead>
+            <tbody data-ranking><tr><td colspan="7" class="e-ranking-pusto">Wczytuję ranking…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
     <section id="mapa" class="e-mapa">
       <div class="wrap">
         <div class="sec-head">
@@ -169,6 +187,27 @@
 
   <script src="js/wspolne.js?v=bf6"></script>
   <script>
+    (async function ranking() {
+      const tb = document.querySelector("[data-ranking]");
+      const razem = document.querySelector("[data-ranking-razem]");
+      const esc = (t) => String(t ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+      const zl = (n) => Number(n || 0).toLocaleString("pl-PL");
+      try {
+        const r = await fetch("/api/earth/ranking", { cache: "no-store" });
+        const d = await r.json();
+        if (!r.ok || !d.panstwa) throw new Error();
+        if (!d.panstwa.length) {
+          tb.innerHTML = '<tr><td colspan="7" class="e-ranking-pusto">Jeszcze nie ma państw — ranking ruszy razem ze startem 11.12 o 20:00.</td></tr>';
+        } else {
+          tb.innerHTML = d.panstwa.map((n, i) => `<tr><td>${["🥇", "🥈", "🥉"][i] || i + 1}</td><td><b>${esc(n.nazwa)}</b>${n.lider ? `<small>${esc(n.lider)}</small>` : ""}</td>
+            <td>${zl(n.punkty)}</td><td>${zl(n.teren)}</td><td>${n.czlonkowie}</td><td>${n.wygrane}</td><td>${n.regiony}</td></tr>`).join("");
+          razem.textContent = `Państw: ${zl(d.razem.panstwa)} · obywateli: ${zl(d.razem.obywatele)} · zajętych chunków: ${zl(d.razem.chunki)} · wojen: ${zl(d.razem.wojny)}`;
+        }
+      } catch {
+        tb.innerHTML = '<tr><td colspan="7" class="e-ranking-pusto">Ranking chwilowo niedostępny.</td></tr>';
+      }
+      setTimeout(ranking, 60000);
+    })();
     document.querySelector("[data-wlacz-mape]")?.addEventListener("click", (e) => {
       const ramka = e.currentTarget.parentElement;
       ramka.innerHTML = '<iframe src="https://mapa.bettergame.pl" title="Mapa Earth SMP (BlueMap)" loading="lazy" allowfullscreen></iframe>';
